@@ -1,0 +1,25 @@
+.btn-custom {
+  background: #fd0;
+  border-radius: 500px;
+  color: black;
+  border: 1.5px solid black;
+  padding: 1.5rem;
+  margin: 1.3rem 0;
+}
+
+.form-cont{
+    padding: 6rem;
+    text-align: center;
+    background: #EBECE7;
+    min-height: 90vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .btn-custom {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  .form-cont {
+    padding: 3rem;
+  }
+}

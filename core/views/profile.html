@@ -1,0 +1,98 @@
+<dash-nav></dash-nav>
+<body ng-app="wuApp" ng-controller="profileController"></body>
+
+<div class="profile-body">
+  <div style="margin-bottom: 3rem;" class="prof-cont container ">
+    <div class="profile-head">
+      <h3>Personal Details</h3>
+
+    </div>
+    <div class="info-div">
+      <table class="table info-table table-bordered">
+        <tbody>
+          <tbody>
+            <tr>
+              <td>First Name:</td>
+              <td>{{ user.firstName }} </td>
+            </tr>
+            <tr>
+              <td>Last Name:</td>
+              <td>{{ user.lastName }} </td>
+            </tr>
+            <tr>
+              <td>Email Id:</td>
+              <td>{{ user.emailId }} </td>
+            </tr>
+            <tr>
+              <td>Mobile Number:</td>
+              <td>{{ user.mobileNumber }} </td>
+            </tr>
+            <tr>
+              <td>Date of Birth:</td>
+              <td>{{ user.dob }} </td>
+            </tr>
+            <tr>
+              <td>country:</td>
+              <td>{{ user.country }} </td>
+            </tr>
+            <tr>
+              <td>Address Line-1:</td>
+              <td>{{ user.address1 }} </td>
+            </tr>
+            <tr>
+              <td>Address Line-2:</td>
+              <td>{{ user.address2 }} </td>
+            </tr>
+            <tr>
+              <td>city:</td>
+              <td>{{ user.city }} </td>
+            </tr>
+            <tr>
+              <td>state:</td>
+              <td>{{ user.state }} </td>
+            </tr>
+            <tr>
+              <td>Pincode:</td>
+              <td>{{ user.zip }} </td>
+            </tr>
+          </tbody>
+      </table>
+      <a href="#!/dashboard/profile/addProfile" role="button" class="btn btn-default profile-btn">Update</a>
+    </div>
+    </div>
+    <div class="container prof-cont">
+    <div class="profile-head">
+        <h3>Account Details</Details></h3>
+    </div>
+    <div class="info-div">
+        <table class="table info-table table-bordered">
+          <tbody>
+            <tr>
+              <td>Account Holder Name:</td>
+              <td>{{ account.accountHolderName }}</td>
+            </tr>
+            <tr>
+              <td>Bank Name:</td>
+              <td>{{ account.bankName }}</td>
+            </tr>
+            <tr>
+              <td>Account no:</td>
+              <td> {{ account.accountNo }} </td>
+            </tr>
+            <tr>
+              <td>IFSC Code:</td>
+              <td> {{ account.ifscCode }} </td>
+            </tr>
+            <tr>
+              <td>Account Balance:</td>
+              <td> {{ account.balance }} </td>
+            </tr>
+          </tbody>
+        </table>
+        <a href="#!/dashboard/profile/account" class="btn btn-default profile-btn">Update</a>
+      </div>
+  </div>
+</div>
+
+
+<common-footer></common-footer>

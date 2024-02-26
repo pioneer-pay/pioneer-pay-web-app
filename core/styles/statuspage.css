@@ -1,0 +1,57 @@
+.status-head {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.head-left {
+  display: flex;
+  align-items: center;
+}
+
+.head-left h3 {
+  margin-top: 10px;
+  padding-left: 1.3rem;
+}
+
+.status-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.accordian {
+  text-align: left;
+  width: 90%;
+}
+
+.foot-status {
+  padding: 2rem 2rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  background-color: #000000;
+  color: white;
+  text-align: center;
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.foot-status h2 {
+  font-size: 2.5rem;
+  padding: 0.5rem 2rem;
+  margin-top: 0;
+}
+
+.foot-status h2:hover {
+  border-radius: 20px;
+  background-color: rgb(36, 35, 35);
+}
+
+.foot-status a {
+  text-decoration: none;
+  color: #fd0;
+}

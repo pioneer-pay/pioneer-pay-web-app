@@ -1,0 +1,36 @@
+.user-form {
+  padding: 1.3rem;
+}
+
+.form-line2 {
+  justify-content: flex-start;
+}
+
+.dob-input {
+  margin-left: 2.5rem;
+}
+
+.address-div {
+  display: flex;
+  align-items: center;
+}
+
+.address-div label {
+  margin-bottom: 0;
+}
+.address-input {
+  width: 85%;
+}
+
+.user-btn {
+  margin-top: 1.8rem;
+  text-align: end;
+  padding-right: 1.2rem;
+}
+
+.user-btn button {
+  background-color: black;
+  color: #fd0;
+  font-size: large;
+}
+

@@ -1,0 +1,245 @@
+.side-cont {
+  display: flex;
+}
+.summary-cont {
+  width: 30%;
+  padding: 3rem 3rem;
+  text-align: left;
+  background: #ebece7;
+}
+
+.sender-form {
+  margin-top: 20px;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+label {
+  margin-right: 10px;
+  display: block;
+}
+
+.dashboard-dropdown {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.dashboard-select {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding: 0px 15px;
+}
+
+.dashboard-select select {
+  height: 45px;
+  width: 270px;
+  padding: 0px 8px;
+  border-radius: 5px;
+  border: 2px solid #000;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+.send-input {
+  padding: 1rem;
+  width: 40%;
+}
+
+#searchButton {
+  padding: 0.5rem;
+  margin: 1rem;
+}
+
+.idea-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.heading2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  margin-top: 2rem;
+}
+
+.heading2 p {
+  margin-bottom: 0;
+  font-size: 1.5rem;
+}
+
+.heading2 img {
+  margin-right: 10px;
+}
+
+.heading3 {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.input-half-width {
+  flex: 1;
+}
+
+.ex-icon {
+  width: 3rem;
+  height: 3rem;
+
+  margin-top: 2rem;
+  margin-right: 8rem;
+}
+
+.money-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.bank-icon {
+  width: 6rem;
+  height: 6rem;
+}
+
+#searchButton {
+  cursor: pointer;
+}
+
+hr {
+  margin: 20px 0;
+}
+
+.sender-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.circle-check {
+  margin-right: 10px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  text-align: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.card-content1 {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  text-align: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.card-content p {
+  font-size: large;
+  margin: 2rem;
+}
+.card-content1 p {
+  font-size: large;
+  margin: 2rem;
+}
+
+.card-content:hover,
+.card-content.clicked {
+  background-color: #045f86;
+  color: white;
+}
+
+.card-content1:hover,
+.card-content1.clicked {
+  background-color: #045f86;
+  color: white;
+}
+
+.card-content img:hover {
+  filter: brightness(0) invert(1);
+}
+
+.card-content.clicked img,
+.card-content1.clicked img {
+  filter: brightness(0) invert(1);
+}
+
+.money-icon {
+  cursor: pointer;
+}
+
+.money-icon.clicked {
+  filter: grayscale(100%);
+}
+
+.card-content img:hover {
+  filter: brightness(0) invert(1);
+}
+
+.card-content1 img:hover {
+  filter: brightness(0) invert(1);
+}
+
+.button-dash {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-dash:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .side-cont {
+    flex-direction: column;
+  }
+
+  .summary-cont {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .dashboard-select {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  .input-half-width {
+    flex: 1;
+    width: 100%;
+  }
+
+  .ex-icon {
+    margin-right: 0;
+  }
+
+  .card-content,
+  .card-content1 {
+    padding: 2rem;
+  }
+}

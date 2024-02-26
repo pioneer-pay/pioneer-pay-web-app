@@ -1,0 +1,63 @@
+<basic-nav></basic-nav>
+<!-- <dash-nav></dash-nav> -->
+
+<div class="login-cont">
+  <div class="container panel">
+    <div class="login-head">
+      <h2 class="text-left">Log in</h2>
+      <a class="login-a" href="#!/register"><h4>Register</h4></a>
+    </div>
+
+    <form name="loginForm" ng-submit="login(loginForm)" novalidate>
+      <div class="form-group">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          placeholder="E-mail"
+          ng-model="loginUser.emailId"
+          required
+        />
+        <div
+          ng-show="loginForm.email.$touched && loginForm.email.$error.required"
+          class="error-message"
+        >
+          E-mail is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          placeholder="Password"
+          type="password"
+          id="password"
+          name="password"
+          ng-model="loginUser.password"
+          required
+        />
+        <div
+          ng-show="loginForm.password.$touched && loginForm.password.$error.required"
+          class="error-message"
+        >
+          Password is required.
+        </div>
+      </div>
+      <button
+        class="btn btn-primary btn-lg btn-block button-login"
+        type="submit"
+        ng-disabled="loginForm.$invalid"
+      >
+        Continue
+      </button>
+    </form>
+    <div ng-if="showSuccessMessage" class="success-message">
+      {{ successMessage }}
+  </div>
+    <div ng-show="responseMessage" class="alert-danger r-validate">
+      Login failed. Enter correct e-mail and password.
+    </div>
+  </div>
+</div>
+<common-footer></common-footer>

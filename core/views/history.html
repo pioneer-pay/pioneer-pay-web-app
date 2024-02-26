@@ -1,0 +1,34 @@
+
+<dash-nav></dash-nav>
+
+<div class="container mt-5" style="min-height: 90vh;">
+  <h2>Transaction History</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">From account</th>
+          <th scope="col">To account</th>
+          <th scope="col">Date & Time</th>
+          <th scope="col">Transaction Amount</th>
+          <th scope="col">Commission</th>
+          <th scope="col">Received amount</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="t in transaction">
+        <td>{{t.transactionId}}</td>
+        <td>{{t.fromAccountId}}</td>
+        <td>{{t.toAccountId}}</td>
+        <td>{{t.dateTime}}</td>
+        <td>{{t.amount}} {{t.baseCurrencyCode}}</td>
+        <td>{{t.commission}} {{t.baseCurrencyCode}}</td>
+        <td>{{t.transferedAmount}} {{t.targetCurrencyCode}}</td>
+        <td>{{t.status}}</td>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<common-footer></common-footer>

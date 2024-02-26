@@ -1,0 +1,24 @@
+<dash-nav></dash-nav>
+
+<form class="login-cont" name="addaccount" ng-submit="submit(addaccount)">
+  <div class="container panel">
+      <h2 class="text-left blue-text">Add Receiver details</h2>
+      <div class="form-group">
+          <input  class="form-control" placeholder="Enter bank name" type="text" ng-model="account.bankName" id="bankName" name="bankName" required/>
+      </div>
+      <div class="form-group">
+          <input  class="form-control" placeholder="Enter account holder name" type="text" ng-model="account.accountHolderName" id="holderName" name="holderName" required/>
+      </div>
+      <div class="form-group">
+              <input  class="form-control" placeholder="Enter account number" type="text" ng-model="account.accountNo" id="accountNo" name="accountNo" required/>
+      </div> 
+      <div class="form-group">
+        <input  class="form-control" placeholder="Enter ifsc code" type="text" ng-model="account.ifscCode" id="ifscCode" name="ifscCode" required/>
+    </div>
+      <div class="form-group">
+          <input  class="form-control" placeholder="Enter amount" type="text" ng-model="account.balance" id="amount" name="amount" required/>
+      </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+</div>
+</form>
+<common-footer></common-footer>

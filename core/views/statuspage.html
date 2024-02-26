@@ -1,0 +1,50 @@
+<dash-nav></dash-nav>
+<div class="login-cont">
+  <div style="margin: 1rem auto" class="container panel">
+    <div class="status-head">
+      <div class="head-left">
+        <img class="status-icon" ng-src="{{ headLeftImage }}" />
+        <h3 class="text-left">{{ headLeftText }}</h3>
+      </div>
+      <a class="login-a" href="#!/dashboard/history"
+        ><h5>Transaction history</h5></a
+      >
+    </div>
+
+    <uib-accordion ng-if="transactions[0].status === 'SUCCESS'">
+      <div
+        uib-accordion-group
+        class="panel-default accordian"
+        heading="Transaction Details"
+        is-open="statusAcc.isFirstOpen"
+        is-disabled="statusAcc.isFirstDisabled"
+      >
+        <p>
+          <strong>TRANSACTION-ID:</strong> {{ transactions[0].transactionId }}
+        </p>
+        <p>
+          <strong> YOU SENT: </strong>{{ transactions[0].amount }} {{
+          transactions[0].baseCurrencyCode }}
+        </p>
+        <p>
+          <strong> RECIEVER GOT:</strong> {{ transactions[0].transferedAmount |
+          number:2 }} {{ transactions[0].targetCurrencyCode }}
+        </p>
+        <p>
+          <strong> DATE / TIME: </strong>{{ transactions[0].dateTime |
+          date:'yyyy-MM-dd' }} / {{ transactions[0].dateTime | date:'HH:mm:ss'
+          }}
+        </p>
+      </div>
+    </uib-accordion>
+  </div>
+</div>
+<footer>
+  <div class="footer-top">
+    <div class="foot-status">
+      <a href="#!/dashboard/history"><h2>Your Transactions</h2></a>
+      <a href="#!/dashboard/profile"><h2>Got to Profile</h2></a>
+      <a href="#!/dashboard"><h2>Make a new Transaction</h2></a>
+    </div>
+  </div>
+</footer>

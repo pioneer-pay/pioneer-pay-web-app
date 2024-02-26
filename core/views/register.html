@@ -1,0 +1,41 @@
+<basic-nav></basic-nav>
+<!-- <dash-nav></dash-nav> -->
+
+<div class="login-cont">
+  <div class="container panel">
+    <div class="form-head">
+      <h3 class="text-left blue-text">Create your profile</h2>
+
+      <br>
+
+    </div>
+    <form name="registerForm" ng-submit="signup(registerForm)" novalidate>
+
+      <div class="form-group form-middle">
+        <input class="form-control" placeholder="Enter your email address" type="email" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" ng-model="user.emailId"  required/>
+        <div
+          ng-show="registerForm.email.$touched && registerForm.email.$error.required"
+          class="error-message">
+          E-mail is required.
+        </div>
+      </div>
+
+      <div class="form-group has-success form-middle">
+        <input  class="form-control" placeholder="Create your password" type="password" ng-model="user.password" id="password" name="password" required/>
+        <div
+          ng-show="registerForm.password.$touched && registerForm.password.$error.required"
+          class="error-message">
+          Password is required.
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg button-submit" type="submit">
+            Register
+      </button>
+      <br>
+      <br>
+      <a class="form-a" href="#!/login"><button class="btn btn-blue btn-lg" >Already registered?Log in</button></a>
+    </form>
+  </div>
+</div>
+<common-footer></common-footer>

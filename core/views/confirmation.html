@@ -1,0 +1,34 @@
+
+  <dash-nav></dash-nav>
+  <div class="dash-body">
+    <div class="profile-body">
+      <div
+        style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f3faff;"
+        class="prof-cont container"
+      >
+        <h3 style="text-align: center">Confirm the details</h3>
+        <hr />
+        <h4>Sender details</h4>
+        <p>Name : {{senderAccount.accountHolderName}}</p>
+        <p>Bank Name : {{senderAccount.bankName}}</p>
+        <p>Account Number : {{senderAccount.accountNo}}</p>
+
+        <hr />
+        <h4>Reciever details</h4>
+        <p>Name: {{recieverAccount.accountHolderName}}</p>
+        <p>Bank Name :{{recieverAccount.bankName}}</p>
+        <p>Account Number :{{recieverAccount.accountNo}}</p>
+        <hr />
+        <h5>Exchange Rate : 1 {{summary.baseCurrencyCode}} = {{summary.rate}} {{summary.targetCurrencyCode}}</h5>
+        <hr>
+        <h5>You are paying  {{summary.amount}} {{summary.baseCurrencyCode}} and the reciever will recieve {{summary.receivedMoney}}{{summary.targetCurrencyCode}}.  </h5>
+        <h6 style="color: gray;">
+          Review and confirm the details before proceeding for the transaction.
+        </h6>
+        <hr>
+        <button ng-click="initiateTransaction()" class="btn btn-lg">Send money</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

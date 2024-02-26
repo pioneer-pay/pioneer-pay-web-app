@@ -1,0 +1,66 @@
+.form-items {
+  padding: 1rem 1rem;
+  width: 80%;
+}
+
+.form-middle {
+  padding: 0 6.5rem;
+}
+
+.form-inline {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.r-validate {
+  width: 50%;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.btn-blue{
+  border-color: #066690;
+  color: #066690;
+}
+
+.blue-text{
+  color: #066690;
+}
+
+.para-text{
+  color: #7F7676;
+}
+
+@media only screen and (max-width: 600px) {
+  .form-items {
+    padding: 0.5rem;
+    width: 100%;
+  }
+  .form-middle {
+    padding: 0 2rem;
+  }
+  .form-inline {
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem 0;
+  }
+  .r-validate {
+    width: 100%;
+    margin: 0.5rem auto;
+    padding: 0.3rem;
+  }
+  .btn-blue {
+    border-color: #066690;
+    color: #066690;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+  }
+  .blue-text {
+    color: #066690;
+  }
+  .para-text {
+    color: #7F7676;
+  }
+}
