@@ -1,0 +1,35 @@
+<basic-nav></basic-nav>
+
+<div class="login-cont">
+  <div class="container panel">
+    <div class="login-head">
+      <h2 class="text-left otp-head">E-mail verification</h2>
+      <a class="login-a" href="#!/login"><h4>Login</h4></a>
+    </div>
+    <div style="display: flex; align-items: center">
+      <input
+        class="form-control"
+        type="email"
+        id="emailInput"
+        ng-model="userEmail"
+        readonly
+      />
+      <button class="btn btn-default btn-primary btn-otp" ng-click="sendOTP()">
+        Get OTP
+      </button>
+    </div>
+    <div class="login-head">
+      <h4 class="text-left otp-head2">Enter your OTP</h4>
+    </div>
+    <div>
+      <input class="form-control" type="text" id="otpValue" value="" /><button
+        class="btn btn-default btn-success btn-otp"
+        onclick="sendOTP()"
+      >
+        Verify
+      </button>
+    </div>
+  </div>
+</div>
+
+<common-footer></common-footer>
