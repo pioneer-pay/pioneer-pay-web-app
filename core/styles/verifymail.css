@@ -14,3 +14,13 @@
 .otp-head2 {
   color: rgb(87, 84, 84);
 }
+
+.otp-message {
+  color: #286090;
+  font-size: small;
+}
+
+.otp-hr {
+  border-top: 2px solid #eee;
+  margin: 1.5rem 0rem 1rem 0rem;
+}

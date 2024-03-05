@@ -19,10 +19,14 @@ wuApp.controller("verifyController", [
 
     $scope.sendOTP = function () {
       $http
-        .get("http://localhost:8081/api/user/otp")
+        .get("http://localhost:8081/api/user/otp/send/" + $scope.userEmail, {
+          transformResponse: function (data) {
+            return { message: data };
+          },
+        })
         .then(function (response) {
-          console.log(response.data);
-          //$scope.userEmail = response.data.emailId;
+          $scope.otpResponseMessage = response.data.message;
+          console.log($scope.otpResponseMessage);
         })
         .catch(function (error) {
           console.error("Error:", error);

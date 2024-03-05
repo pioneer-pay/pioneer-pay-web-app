@@ -18,6 +18,10 @@
         Get OTP
       </button>
     </div>
+    <div ng-if="otpResponseMessage">
+      <p class="otp-message">{{ otpResponseMessage }}</p>
+    </div>
+    <hr class="otp-hr" />
     <div class="login-head">
       <h4 class="text-left otp-head2">Enter your OTP</h4>
     </div>
