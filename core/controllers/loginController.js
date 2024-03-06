@@ -5,7 +5,9 @@ wuApp.controller("loginController", [
   "$timeout",
   "authService",
   "localStorageService",
-  function ($scope, $location, $http,$timeout, authService,localStorageService) {
+  "profileService",
+  "internetConnectivityService",
+  function ($scope, $location, $http,$timeout, authService,localStorageService,profileService,internetConnectivityService) {
     $scope.loginUser = {
       emailId: "",
       password: "",
@@ -13,6 +15,10 @@ wuApp.controller("loginController", [
 
     $scope.showSuccessMessage = false;
     $scope.successMessage = "";
+    
+    console.log("online activity");
+    $scope.isOnline = internetConnectivityService.isOnline();
+    console.log($scope.isOnline);
     
     //login user
     $scope.login = function (form) {
@@ -28,6 +34,17 @@ wuApp.controller("loginController", [
           authService.setUserID($scope.userId);
           localStorageService.saveUserID($scope.userId);
           $scope.userId = localStorageService.getUserID();
+          $http
+             .get("http://localhost:8081/api/user/"+$scope.userId)
+             .then(function(response){
+                console.log(response.data);
+                $scope.userName= response.data['firstName'];
+                console.log($scope.userName);
+                profileService.setUserName($scope.userName);
+             })
+             .catch(function(error){
+                console.log("Error:",error);
+             });
           if ($scope.loginForm.$valid && $scope.status === true) {
             $scope.responseMessage = null;
             $location.path("/dashboard");

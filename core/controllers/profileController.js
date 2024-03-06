@@ -47,6 +47,7 @@ wuApp.controller("profileController", [
                 console.log(response.data);
                 $scope.account=response.data[0];
                 $scope.accountId=response.data[0].accountId;
+                // accountService.setAccountID=response.data[0].accountId;
                 console.log($scope.account);
             });
 
