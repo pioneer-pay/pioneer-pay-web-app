@@ -49,6 +49,7 @@ wuApp.controller("transactionController",[
     $scope.onClick=function(accountid){
       transactionService.setReceiverAccountID(accountid);
       console.log(accountid);
+      // localStorage.setItem('cachedReceiver', JSON.stringify(response.data));
     };
 
     //go to the confirmation page
@@ -65,6 +66,13 @@ wuApp.controller("transactionController",[
             })
             .catch(function(error){
               console.log("Error:",error);
+              const cachedAccounts = localStorage.getItem('cachedAccounts');
+                    if (cachedAccounts) {
+                        $scope.allAccounts = JSON.parse(cachedAccounts);
+                    } else {
+                        // Handle case when there's no cached data available
+                        $scope.allAccounts = null;
+                    }
             });
           },
 

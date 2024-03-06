@@ -1,10 +1,13 @@
 wuApp.controller("dashboardController", [
   "$scope",
   "$http",
+  "$interval",
   "transactionService",
   "authService",
   "accountService",
-  function ($scope, $http, transactionService, authService, accountService) {
+  "localStorageService",
+  "internetConnectivityService",
+  function ($scope, $http, $interval, transactionService, authService, accountService,localStorageService,internetConnectivityService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -32,20 +35,39 @@ wuApp.controller("dashboardController", [
       balance: "",
       ifscCode: "",
     };
+    $scope.cachedTransfer="";
     $scope.onClick = function () {};
-
-    // $scope.clicked = false;
-    // $scope.toggleClicked = function () {
-    //   $scope.clicked = !$scope.clicked;
-    //   console.log("clicked");
-    // };
-
-    // $scope.isIconClicked = false;
-    // $scope.toggleClicked2 = function () {
-    //   $scope.isIconClicked = !$scope.isIconClicked;
-    //   console.log("isIconClicked");
-    // };
-
+    //check internet connection
+    console.log("online connection check!");
+    $scope.isOnline = internetConnectivityService.isOnline();
+    function updateOnlineStatus() {
+    $scope.isOnline = internetConnectivityService.isOnline();
+    const cachedTransfer = localStorage.getItem('cachedTransfer');
+        if (cachedTransfer) {
+            $scope.cachedTransfer = JSON.parse(cachedTransfer);
+        } else {
+            //when there's no cached data available
+            $scope.cachedTransfer = null;
+        }
+    // console.log($scope.isOnline);
+    }
+    var intervalPromise = $interval(updateOnlineStatus, 3000);
+    $scope.$on('$destroy', function() {
+      if (angular.isDefined(intervalPromise)) {
+          $interval.cancel(intervalPromise);
+          intervalPromise = undefined;
+      }});
+    
+    //pending transfer operations
+    $scope.onCancelPending = function(){
+      localStorage.removeItem('cachedTransfer');
+      console.log("canceld pending transfer");
+    };
+    
+    $scope.onContinuePending = function(){
+    console.log("offline transfer is being initiated");
+    };
+    
     $scope.bankClicked = false;
     $scope.toggleBankClicked = function () {
       $scope.bankClicked = !$scope.bankClicked;
@@ -59,17 +81,41 @@ wuApp.controller("dashboardController", [
     };
 
     //get sender account details to continue transaction
-    let id = authService.getUserID();
+    let id = localStorageService.getUserID();
     $http
       .get("http://localhost:8081/api/user/account/" + id)
       .then(function (response) {
         console.log(response.data);
         $scope.account = response.data[0];
+        localStorage.setItem('cachedSender', JSON.stringify(response.data[0]));
         $scope.accountId = response.data[0].accountId;
-        accountService.setAccountID($scope.accountId);
+        accountService.setAccountID(response.data[0].accountId);
         console.log(accountService.getAccountID());
         console.log($scope.account);
       });
+    
+    //store receiver list
+    let accountid= accountService.getAccountID();
+    $http.get("http://localhost:8082/api/account/get/" + accountid)
+    .then(function(response) {
+        console.log(response.data);
+        $scope.allAccounts = response.data;
+        console.log(response.data);
+        // Cache the data
+        localStorage.setItem('cachedAccounts', JSON.stringify(response.data));
+    })
+    .catch(function(error) {
+        console.log("Error:", error);
+        // Attempt to retrieve data from cache
+        const cachedAccounts = localStorage.getItem('cachedAccounts');
+        if (cachedAccounts) {
+            $scope.allAccounts = JSON.parse(cachedAccounts);
+        } else {
+            // Handle case when there's no cached data available
+            $scope.allAccounts = null;
+        }
+    });
+
 
     let currencyFrom = "";
     let currencyTo = "";
@@ -158,6 +204,7 @@ wuApp.controller("dashboardController", [
               4
             )} ${currencyTo}`;
             console.log($scope.summary);
+            localStorage.setItem('cachedSummary', JSON.stringify(response.data));
           })
           .catch(function (error) {
             console.log("Error:", error);

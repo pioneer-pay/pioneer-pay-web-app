@@ -1,5 +1,6 @@
 let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap"]);
 
+wuApp.requires.push('InternetConnectivityConfig');
 //ROUTING
 wuApp.config(function ($routeProvider) {
   $routeProvider
@@ -65,15 +66,20 @@ wuApp.directive('basicNav', function () {
   };
 });
 
-wuApp.directive('dashNav', ['localStorageService', function (localStorageService) {
+wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','internetConnectivityService', function (localStorageService,accountService,profileService,internetConnectivityService) {
   return {
     templateUrl: 'directives/navdashboard.html',
     replace: true,
     controller: function ($scope,$location) {
       $scope.logout = function () {
         localStorageService.clearUserID('userId');
+        accountService.clearAccountID('accountId');
+        profileService.clearUserName('userName');
+        localStorage.clear();
         $location.path('/login');
       };
+      $scope.userName = profileService.getUserName();
+      
     }
   };
 }]);
