@@ -3,9 +3,7 @@ wuApp.controller("statusController", [
   "$http",
   "$interval",
   "authService",
-  "localStorageService",
-  "accountService",
-  function ($scope, $http, $interval, authService,localStorageService,accountService) {
+  function ($scope, $http, $interval, authService) {
     $scope.headLeftImage = "assets/wall-clock.png";
     $scope.headLeftText = "Your transaction is being processed...";
 
@@ -34,13 +32,12 @@ wuApp.controller("statusController", [
       status: "",
     };
 
-    var id = localStorageService.getUserID();
+    var id = authService.getUserID();
     var accId = "";
-    var accountid= accountService.getAccountID();
 
     function fetchTransactionStatus() {
       $http
-        .get("http://localhost:8083/api/transaction/history/" + accountid)
+        .get("http://localhost:8083/api/transaction/history/" + accId)
         .then(function (response) {
           $scope.transactions = response.data;
           console.log($scope.transactions[0].status);

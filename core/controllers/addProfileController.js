@@ -3,8 +3,7 @@ wuApp.controller("addProfileController",[
 "$http",
 "$location",
 "authService",
-"localStorageService",
-function($scope,$http,$location,authService,localStorageService){
+function($scope,$http,$location,authService){
   $scope.user = {
     firstName: '',
     lastName: '',
@@ -19,12 +18,8 @@ function($scope,$http,$location,authService,localStorageService){
     state:''
   };
 
-  $scope.cancelUpdate = function(){
-    $location.path("/dashboard/profile");
-  };
-
   //show user profile details
-  let id=localStorageService.getUserID();
+  let id=authService.getUserID();
   $http
   .get("http://localhost:8081/api/user/"+id)
   .then(function(response){

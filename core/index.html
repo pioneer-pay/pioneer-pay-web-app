@@ -56,33 +56,17 @@
     <script src="assets/countries.js"></script>
     <script src="controllers/receiverController.js"></script>
     <script src="controllers/transactionController.js"></script>
+    <script src="controllers/summaryController.js"></script>
     <script src="controllers/confirmController.js"></script>
     <script src="controllers/statusController.js"></script>
-    
 
     <script src="service/authService.js"></script>
     <script src="service/accountService.js"></script>
     <script src="service/transactionService.js"></script>
     <script src="service/localStorageService.js"></script>
-    <script src="service/profileService.js"></script>
-    <script src="service/internetConnectivityService.js"></script>
-    <script src="service/internetConnectivityConfig.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    <p ng-show="isOnline">You are online.</p>
-    <p ng-hide="isOnline" style="background-color: red;">You are offline.</p>
     <div ng-view></div>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js').then(function(registration) {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }, function(err) {
-            console.error('ServiceWorker registration failed: ', err);
-          });
-        });
-      }
-    </script>
   </body>
 </html>
