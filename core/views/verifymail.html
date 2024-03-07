@@ -22,16 +22,37 @@
       <p class="otp-message">{{ otpResponseMessage }}</p>
     </div>
     <hr class="otp-hr" />
+
     <div class="login-head">
       <h4 class="text-left otp-head2">Enter your OTP</h4>
     </div>
-    <div>
-      <input class="form-control" type="text" id="otpValue" value="" /><button
+    <div class="input-group-lg">
+      <input
+        class="form-control spaced-input"
+        type="text"
+        id="otpValue"
+        value=""
+        ng-model="enteredOtp"
+        ng-change="validateOtp()"
+      />
+      <div ng-show="otpInvalid && otpModified">
+        <div class="text-danger otp-val">OTP should be a 6-digit number.</div>
+      </div>
+      <button
         class="btn btn-default btn-success btn-otp"
-        onclick="sendOTP()"
+        ng-click="verifyOTP()"
+        ng-disabled="otpInvalid"
       >
         Verify
       </button>
+      <div ng-if="verifyResponse.message && verifyResponse.status">
+        <p class="verify-message text-success">
+          {{ verifyResponse.message}} Redirecting...
+        </p>
+      </div>
+      <div ng-if="verifyResponse.message && !verifyResponse.status">
+        <p class="verify-message text-danger">{{ verifyResponse.message }}</p>
+      </div>
     </div>
   </div>
 </div>

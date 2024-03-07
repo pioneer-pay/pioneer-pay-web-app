@@ -18,9 +18,36 @@
 .otp-message {
   color: #286090;
   font-size: small;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .otp-hr {
   border-top: 2px solid #eee;
   margin: 1.5rem 0rem 1rem 0rem;
+}
+
+.otp-val {
+  font-size: smaller;
+  margin: 0.8rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.spaced-input {
+  letter-spacing: 35px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.verify-message {
+  font-size: medium;
+  margin: 0.8rem auto;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.text-success {
+  background-color: #5cb85c;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  width: 60%;
 }
