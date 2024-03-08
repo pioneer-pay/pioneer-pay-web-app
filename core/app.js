@@ -25,6 +25,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/profile.html',
       controller: 'profileController',
     })
+    .when('/dashboard/notification',{
+      templateUrl:'views/notification.html',
+      controller: 'notificationController'
+    })
     .when('/dashboard/profile/addProfile',{
       templateUrl: 'views/addProfile.html',
       controller: 'addProfileController',
@@ -65,16 +69,37 @@ wuApp.directive('basicNav', function () {
   };
 });
 
-wuApp.directive('dashNav', ['localStorageService', function (localStorageService) {
+
+// wuApp.directive('dashNav', ['localStorageService', function (localStorageService) {
+//   return {
+//     templateUrl: 'directives/navdashboard.html',
+//     replace: true,
+//     controller: function ($scope,$location) {
+//       $scope.logout = function () {
+//         localStorageService.clearUserID('userId');
+//         $location.path('/login');
+//       };
+//     }
+//   };
+// }]);
+
+wuApp.directive('dashNav', ['localStorageService', 'notificationService', function(localStorageService, notificationService) {
   return {
-    templateUrl: 'directives/navdashboard.html',
-    replace: true,
-    controller: function ($scope,$location) {
-      $scope.logout = function () {
-        localStorageService.clearUserID('userId');
-        $location.path('/login');
-      };
-    }
+      templateUrl: 'directives/navdashboard.html',
+      replace: true,
+      controller: function($scope, $location) {
+          $scope.logout = function() {
+              localStorageService.clearUserID('userId');
+              $location.path('/login');
+          };
+
+          // Get unread notification count
+          var userId = localStorageService.getUserID();
+          notificationService.getUnreadCount(userId)
+              .then(function(unreadCount) {
+                  $scope.unreadCount = unreadCount;
+              });
+      }
   };
 }]);
 
