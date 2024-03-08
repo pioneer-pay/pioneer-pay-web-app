@@ -1,139 +1,130 @@
 <dash-nav></dash-nav>
 <div class="side-cont">
 
-<div class="profile-body dash-cont">
-  <div
-    style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white;"
-    class=" container"
-  > 
+  <div class="profile-body dash-cont">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white;" class=" container">
 
-  <h2>Send Money Online</h2>
-  <hr>
-<form name="dashboard" class="sender-form">
-    <div class="heading">Select the country and send amount!</div>
-    <div class="dashboard-dropdown">
-      <div class="dashboard-select">
-        <label for="countrySelect">Send from:</label>
-        <select id="countrySelectFrom">
-          <option value="">Select Country</option>
-        </select>
-      </div>
-      <div class="dashboard-select">
-        <label for="countrySelect">Send to:</label>
-        <select id="countrySelectTo">
-          <option value="">Select Country</option>
-        </select>
-      </div>
-    </div>
-    <div class="heading2">
-      <img class="idea-icon" src="assets/idea.png" alt="Idea Icon" />
-      <p>
-        We do over 500,000 online money transactions globally every month.
-      </p>
-    </div>
-  <div class="heading3">
-    <div class="input-half-width">
-      <label for="amount">Send Amount</label>
-      <input type="text" class="input-lg" id="amount" />
-      <p>Currency: <span id="currencyCodeSend"></span></p>
-    </div>
-
-    <img class="ex-icon" src="assets/exchange.png" alt="Idea Icon" />
-    <div class="input-half-width">
-      <label>Receive Amount</label>
-      <input type="text" class="input-lg" id="amountReceive" />
-      <p>Currency: <span id="currencyCodeReceive"></span></p>
-    </div>
-
-  </div>
-  <button id="convert-button">Convert</button>
-    <p id="result"></p>
-  <hr />
-
-      <div>
-
-        <p class="heading">How does your receiver want the money?</p>
-        <div class="sender-card">
-          <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
-            <p>Bank Account</p>
+      <h2>Send Money Online</h2>
+      <hr>
+      <form name="dashboard" class="sender-form">
+        <div class="heading">Select the country and send amount!</div>
+        <div class="dashboard-dropdown">
+          <div class="dashboard-select">
+            <label for="countrySelect">Send from:</label>
+            <select id="countrySelectFrom">
+              <option value="" id="optionFrom">Select Country</option>
+            </select>
+          </div>
+          <div class="dashboard-select">
+            <label for="countrySelect">Send to:</label>
+            <select id="countrySelectTo">
+              <option value="" id="optionTo">Select Country</option>
+            </select>
           </div>
         </div>
         <div class="heading2">
-          <img
-            class="money-icon"
-            src="assets/transfer.png"
-            alt="Transfer Icon"
-
-          />
-
+          <img class="idea-icon" src="assets/idea.png" alt="Idea Icon" />
           <p>
-            Your money will credited to reciever's bank account hassle free!
+            We do over 500,000 online money transactions globally every month.
           </p>
         </div>
-      </div>
-      <hr />
-      <div>
-        <p class="heading">How would you like to pay?</p>
-        <div class="sender-card">
-          <div class="card-content1" ng-class="{ 'clicked': cardClicked }" ng-click="toggleCardClicked()">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
-            <p>Card Details</p>
+        <div class="heading3">
+          <div class="input-half-width">
+            <label for="amount">Send Amount</label>
+            <input type="text" class="input-lg" id="amount"  />
+            <p>Currency: <span id="currencyCodeSend"></span></p>
+          </div>
+
+          <img class="ex-icon" src="assets/exchange.png" alt="Idea Icon" />
+          <div class="input-half-width">
+            <label>Receive Amount</label>
+            <input type="text" class="input-lg" id="amountReceive" />
+            <p>Currency: <span id="currencyCodeReceive"></span></p>
+          </div>
+
+        </div>
+        <button id="convert-button">Convert</button>
+        <p id="result"></p>
+        <hr />
+
+        <div>
+
+          <p class="heading">How does your receiver want the money?</p>
+          <div class="sender-card">
+            <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
+              <p>Bank Account</p>
+            </div>
+          </div>
+          <div class="heading2">
+            <img class="money-icon" src="assets/transfer.png" alt="Transfer Icon" />
+
+            <p>
+              Your money will credited to reciever's bank account hassle free!
+            </p>
           </div>
         </div>
-        <div class="heading2">
-          <img class="money-icon" src="assets/check-mark.png" alt="Checkmark Icon" ng-click="changeColor('money')" ng-class="{ 'clicked': isClicked('money') }" />
-          <p>You have chosen the best price option.</p>
+        <hr />
+        <div>
+          <p class="heading">How would you like to pay?</p>
+          <div class="sender-card">
+            <div class="card-content1" ng-class="{ 'clicked': cardClicked }" ng-click="toggleCardClicked()">
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
+              <p>Card Details</p>
+            </div>
+          </div>
+          <div class="heading2">
+            <img class="money-icon" src="assets/check-mark.png" alt="Checkmark Icon" ng-click="changeColor('money')"
+              ng-class="{ 'clicked': isClicked('money') }" />
+            <p>You have chosen the best price option.</p>
+          </div>
         </div>
-      </div>
-      <hr />
-      <a href="#!/transaction">
-      <button
-        type="submit"
-        class="btn btn-primary btn-lg btn-block button-login"
-        ng-click="onClick()"
-      >
-        Continue
-      </button>
-      </a>
-    </form>
+        <hr />
+        <a href="" ng-click="onClick()">
+          <button type="submit" class="btn btn-primary btn-lg btn-block button-login" >
+            Continue
+          </button>
+        </a>
+      </form>
+    </div>
   </div>
-</div>
 
-<div class="summary-cont">
-  <div style=" margin: 0 auto; padding: 15px; background: #F3FAFF; ">
-    <h3>Summary</h3>
-    <table class="table">
+  <div class="summary-cont">
+    <div style=" margin: 0 auto; padding: 15px; background: #F3FAFF; ">
+      <h3>Summary</h3>
+      <table class="table">
 
-      <tr>
-        <th>Exchange rate</th>
-        <td><p id="result2"></p></td>
-      </tr>
+        <tr>
+          <th>Exchange rate</th>
+          <td>
+            <p id="result2"></p>
+          </td>
+        </tr>
 
-      <tr>
-        <th>Fee</th>
-        <td>{{summary.commission}} {{summary.baseCurrencyCode}} </td>
-      </tr>
+        <tr>
+          <th>Fee</th>
+          <td>{{summary.commission}} {{summary.baseCurrencyCode}} </td>
+        </tr>
 
-      <tr>
-        <th>Transfer amount</th>
-        <td>{{summary.amount}} {{summary.baseCurrencyCode}} </td>
-      </tr>
+        <tr>
+          <th>Transfer amount</th>
+          <td>{{summary.amount}} {{summary.baseCurrencyCode}} </td>
+        </tr>
 
-      <tr>
-        <th>Amount expected to receive</th>
-        <td>{{summary.receivedMoney}} {{summary.targetCurrencyCode}} </td>
-      </tr>
+        <tr>
+          <th>Amount expected to receive</th>
+          <td>{{summary.receivedMoney}} {{summary.targetCurrencyCode}} </td>
+        </tr>
 
-      <tr>
-        <th>Service time</th>
-        <td> 0-4 Business days</td>
-      </tr>
+        <tr>
+          <th>Service time</th>
+          <td> 0-4 Business days</td>
+        </tr>
 
-    </table>
+      </table>
 
+    </div>
   </div>
-</div>
 </div>
 </div>
 <common-footer></common-footer>

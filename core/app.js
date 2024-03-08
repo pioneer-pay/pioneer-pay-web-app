@@ -1,4 +1,4 @@
-let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap"]);
+let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap", "appConfig"]);
 
 //ROUTING
 wuApp.config(function ($routeProvider) {

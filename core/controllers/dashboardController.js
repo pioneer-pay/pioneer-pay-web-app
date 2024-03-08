@@ -4,7 +4,10 @@ wuApp.controller("dashboardController", [
   "transactionService",
   "authService",
   "accountService",
-  function ($scope, $http, transactionService, authService, accountService) {
+  "quickResendService",
+  "$location",
+  "$timeout",
+  function ($scope, $http, transactionService, authService, accountService, quickResendService, $location, $timeout) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -32,31 +35,17 @@ wuApp.controller("dashboardController", [
       balance: "",
       ifscCode: "",
     };
-    $scope.onClick = function () {};
+    $scope.amountValue = "";
 
-    // $scope.clicked = false;
-    // $scope.toggleClicked = function () {
-    //   $scope.clicked = !$scope.clicked;
-    //   console.log("clicked");
-    // };
 
-    // $scope.isIconClicked = false;
-    // $scope.toggleClicked2 = function () {
-    //   $scope.isIconClicked = !$scope.isIconClicked;
-    //   console.log("isIconClicked");
-    // };
-
-    $scope.bankClicked = false;
-    $scope.toggleBankClicked = function () {
-      $scope.bankClicked = !$scope.bankClicked;
-      console.log("Bank clicked");
+    var sendMoneyQuery = $location.search();
+    var selectedTransaction = quickResendService.getSelectedTransaction();
+    $scope.onClick = function () {
+      $location.path('/transaction');
     };
 
-    $scope.cardClicked = false;
-    $scope.toggleCardClicked = function () {
-      $scope.cardClicked = !$scope.cardClicked;
-      console.log("Card clicked");
-    };
+
+
 
     //get sender account details to continue transaction
     let id = authService.getUserID();
@@ -75,17 +64,82 @@ wuApp.controller("dashboardController", [
     let currencyTo = "";
 
     //code for select country from dropdown and show its currency
-    let select = document.getElementById("countrySelectTo");
+    let selectTo = document.getElementById("countrySelectTo");
     let currencyCodeDisplayTo = document.getElementById("currencyCodeReceive");
     let selectFrom = document.getElementById("countrySelectFrom");
     let currencyCodeDisplayFrom = document.getElementById("currencyCodeSend");
 
+    $scope.bankClicked = false;
+    $scope.toggleBankClicked = function () {
+      $scope.bankClicked = !$scope.bankClicked;
+      console.log("Bank clicked");
+    };
+
+    $scope.cardClicked = false;
+    $scope.toggleCardClicked = function () {
+      $scope.cardClicked = !$scope.cardClicked;
+      console.log("Card clicked");
+    };
+
+
+    angular.element(document).ready(function () {
+      console.log("page loaded", $location.search());
+      if ($location.search().isResendClicked) {
+        $scope.bankClicked = true;
+        $scope.toggleBankClicked = function () {
+          $scope.bankClicked = !$scope.bankClicked;
+          console.log("Bank clicked");
+        };
+
+        $scope.cardClicked = true;
+        $scope.toggleCardClicked = function () {
+          $scope.cardClicked = !$scope.cardClicked;
+          console.log("Card clicked");
+        };
+      }
+
+
+      convertCurrency();
+      //init();
+    });
+
+
+
+
+
+    //------------------------autofill data if resend clicked------------------------------//
+    let selectedCountryFrom = sendMoneyQuery.senderCountry;
+    let selectedCountryTo = sendMoneyQuery.receiverCountry;
+
+    let countryFrom = countries.find(country => country.currency_code === selectedCountryFrom);
+    let countryTo = countries.find(country => country.currency_code === selectedCountryTo);
+
+    if (countryFrom && selectedCountryFrom) {
+      document.getElementById("optionFrom").textContent = countryFrom.country;
+      document.getElementById("currencyCodeSend").textContent = countryFrom.currency_code;
+    }
+
+    if (countryTo && selectedCountryTo) {
+      document.getElementById("optionTo").textContent = countryTo.country;
+      document.getElementById("currencyCodeReceive").textContent = countryTo.currency_code;
+    }
+    // let amountInput = document.querySelector("#amount");
+    // amountInput.dispatchEvent(new Event("input"));
+    let amount;
+    if (sendMoneyQuery.amount) {
+      document.getElementById("amount").value = sendMoneyQuery.amount;
+    }
+
+
+
+
     // Loop through the countries array and add options to the select element
+
     for (const element of countries) {
       let option = document.createElement("option");
       option.value = element.currency_code;
       option.text = element.country;
-      select.appendChild(option);
+      selectTo.appendChild(option);
     }
 
     for (const element of countries) {
@@ -95,8 +149,8 @@ wuApp.controller("dashboardController", [
       selectFrom.appendChild(option);
     }
     //to show selected country currency code
-    select.addEventListener("change", function () {
-      let selectedValue = select.value;
+    selectTo.addEventListener("change", function () {
+      let selectedValue = selectTo.value;
       let selectedCountry = countries.find(
         (country) => country.currency_code === selectedValue
       );
@@ -129,34 +183,46 @@ wuApp.controller("dashboardController", [
       }
     });
 
+
+    console.log(document.getElementById("amount").value);
+
+
     let convertCurrency = () => {
-      //Create References
-      const amount = document.querySelector("#amount").value;
+
+      console.log('convertCurrency() called');
+      const selectedCountryFrom = document.getElementById("currencyCodeSend").textContent;
+      const selectedCountryTo = document.getElementById("currencyCodeReceive").textContent;
+      console.log(selectedCountryFrom + " " + selectedCountryTo);
+      let amount;
+      amount = sendMoneyQuery.amount
+        ? sendMoneyQuery.amount
+        : document.getElementById("amount").value;
+
+
+      const amountReceiveInput = document.querySelector("#amountReceive");
+      console.log(amount);
       transactionService.setAmount(amount);
       console.log(transactionService.getAmount());
-      let amountReceive = document.querySelector("#amountReceive").value;
 
-      if (amount.length != 0) {
+      if (amount.length !== 0) {
         $http
           .get(
             "http://localhost:8083/api/transaction/summary/" +
-              currencyFrom +
-              "/" +
-              currencyTo +
-              "/" +
-              amount
+            selectedCountryFrom +
+            "/" +
+            selectedCountryTo +
+            "/" +
+            amount
           )
           .then(function (response) {
             console.log(response.data);
             $scope.summary = response.data;
-            document.getElementById("amountReceive").value =
+            amountReceiveInput.value =
               $scope.summary.amount * $scope.summary.rate;
-            result.innerHTML = `${1} ${currencyFrom} = ${$scope.summary.rate.toFixed(
-              4
-            )} ${currencyTo}`;
-            result2.innerHTML = `${1} ${currencyFrom} = ${$scope.summary.rate.toFixed(
-              4
-            )} ${currencyTo}`;
+
+            result.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
+            result2.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
+
             console.log($scope.summary);
           })
           .catch(function (error) {
@@ -167,9 +233,28 @@ wuApp.controller("dashboardController", [
       }
     };
 
-    document
-      .querySelector("#convert-button")
-      .addEventListener("click", convertCurrency);
-    window.addEventListener("load", convertCurrency);
+
+    let amountInput = document.getElementById("amount");
+    console.log(typeof amountInput.value);
+    let timeoutId;
+
+    amountInput.addEventListener("input", function () {
+
+      clearTimeout(timeoutId);
+
+
+      timeoutId = $timeout(function () {
+        convertCurrency();
+      }, 3000);
+    });
+
+
+
+
+
+
+
+
+
   },
 ]);
