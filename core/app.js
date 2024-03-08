@@ -33,6 +33,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/account.html',
       controller: 'accountController',
     })
+    .when('dashboard/reminderModalContent',{
+      templateUrl: 'views/reminderModalContent.html',
+      controller:'reminderModalController',
+    })
     .when('/dashboard/history',{
       templateUrl:'views/history.html',
       controller:'historyController',

@@ -1,10 +1,11 @@
 wuApp.controller("dashboardController", [
   "$scope",
   "$http",
+  "$uibModal",
   "transactionService",
   "authService",
   "accountService",
-  function ($scope, $http, transactionService, authService, accountService) {
+  function ($scope, $http,$uibModal, transactionService, authService, accountService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -33,6 +34,42 @@ wuApp.controller("dashboardController", [
       ifscCode: "",
     };
     $scope.onClick = function () {};
+    $scope.selectedCardId = null;
+
+    $scope.setSelectedPaymentMethod = function (cardId,paymentMethod) {
+    $scope.selectedCardId = $scope.selectedCardId === cardId ? null : cardId;
+    console.log("Card clicked with ID:", cardId);
+    $scope.selectedPaymentMethod = paymentMethod;
+    console.log("Card clicked for payment option:", paymentMethod);
+  };
+
+
+    $scope.openReminderModal = function() {
+      var modalInstance = $uibModal.open({
+          templateUrl: 'views/reminderModalContent.html',
+          controller: 'reminderModalController',
+          resolve: {
+            reminderDetails: function () {
+              return {
+                amount: document.getElementById("amount").value,
+                sourceCountry: document.getElementById("countrySelectFrom").options[document.getElementById("countrySelectFrom").selectedIndex].text,
+                destinationCountry: document.getElementById("countrySelectTo").options[document.getElementById("countrySelectTo").selectedIndex].text,
+                paymentMethod: $scope.selectedPaymentMethod,
+                reminderDate: new Date(), // Initialize with current date
+                reminderTime: new Date() // Initialize with current time
+                
+              };
+              
+            }
+          }
+      });
+      modalInstance.result.then(function (selectedItem) {
+          $scope.selected = selectedItem;
+      }, function () {
+          console.log('Modal dismissed at: ' + new Date());
+      });
+  };
+  
 
     // $scope.clicked = false;
     // $scope.toggleClicked = function () {
@@ -45,6 +82,7 @@ wuApp.controller("dashboardController", [
     //   $scope.isIconClicked = !$scope.isIconClicked;
     //   console.log("isIconClicked");
     // };
+ 
 
     $scope.bankClicked = false;
     $scope.toggleBankClicked = function () {
@@ -52,11 +90,11 @@ wuApp.controller("dashboardController", [
       console.log("Bank clicked");
     };
 
-    $scope.cardClicked = false;
-    $scope.toggleCardClicked = function () {
-      $scope.cardClicked = !$scope.cardClicked;
-      console.log("Card clicked");
-    };
+    // $scope.cardClicked = false;
+    // $scope.toggleCardClicked = function () {
+    //   $scope.cardClicked = !$scope.cardClicked;
+    //   console.log("Card clicked");
+    // };
 
     //get sender account details to continue transaction
     let id = authService.getUserID();
