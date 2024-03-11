@@ -4,46 +4,27 @@ wuApp.controller('reminderModalController', [
     '$uibModalInstance', // Inject the $uibModalInstance service to interact with this modal instance
     'reminderDetails',
     "authService",
-    function ($scope,$http,$uibModalInstance,reminderDetails,authService) {
+    "dateTimePickerService",
+    function ($scope,$http,$uibModalInstance,reminderDetails,authService,dateTimePickerService) {
     // Pre-fill the form
      $scope.reminderDetails = reminderDetails;
      var emailId = authService.getEmailID();
      console.log(emailId);
     
-
-    // Date and Time picker setup
-
-    $scope.dateOptions = {
-        // Disable past dates
-        minDate: new Date(),
-        // Other options can go here
-    };
+    
+    // Use the DateTimePickerService to get date options
+    $scope.dateOptions = dateTimePickerService.getDatePickerOptions();
     $scope.format = 'yyyy/MM/dd/'; // Set the format for the date
     $scope.popup = {
         opened: false
     };
-
+    
     $scope.open = function() {
         $scope.popup.opened = true;
     };
-
-    //set the format for time
-    $scope.formatTime = function(date) {
-        if (!date) return '';
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
-        // Ensuring two digits by padding with zero if necessary
-        hours = hours < 10 ? '0' + hours : hours;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        return hours + ':' + minutes + ':' + seconds;
-    };
     
-   
-    
-
-    
+    // Use the formatTime function from DateTimePickerService
+    $scope.formatTime = dateTimePickerService.formatTime;
     
     $scope.ok = function () {
         // Implement submission logic here, possibly using $http to send data to your backend
