@@ -1,5 +1,6 @@
 let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap"]);
 
+wuApp.requires.push('InternetConnectivityConfig');
 //ROUTING
 wuApp.config(function ($routeProvider) {
   $routeProvider
@@ -65,15 +66,51 @@ wuApp.directive('basicNav', function () {
   };
 });
 
-wuApp.directive('dashNav', ['localStorageService', function (localStorageService) {
+wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','internetConnectivityService', function (localStorageService,accountService,profileService,internetConnectivityService) {
   return {
     templateUrl: 'directives/navdashboard.html',
     replace: true,
-    controller: function ($scope,$location) {
+    controller: function ($scope,$location,$rootScope) {
       $scope.logout = function () {
         localStorageService.clearUserID('userId');
+        accountService.clearAccountID('accountId');
+        profileService.clearUserName('userName');
+        localStorage.clear();
         $location.path('/login');
       };
+      $scope.userName = profileService.getUserName();
+      $scope.isOnline = internetConnectivityService.isOnline();
+      $scope.logoutAvailable = false;
+
+      if ($scope.isOnline) {
+        document.getElementById("logoutButton").removeAttribute("disabled");
+        $scope.logoutAvailable = true;
+      }
+      // Function to check internet connectivity and update logout button visibility
+      function updateLogoutButton() {
+        var logoutButton = document.querySelector('.login'); // Get the logout button element
+        if ($scope.isOnline) {
+            logoutButton.style.display = 'block'; // Show logout button
+            logoutButton.disabled = false;
+        } else {
+            logoutButton.style.display = 'block'; 
+            logoutButton.disabled = true;
+        }
+      }
+      // function updateLogoutButton() {
+      //   $scope.isOnline = $rootScope.isOnline;
+      // }
+
+
+      // Initial update of the logout button visibility
+      updateLogoutButton();
+
+      // Watch for changes in internet connectivity and update logout button visibility accordingly
+      $rootScope.$on('internetStatusChanged', function (event, data) {
+        console.log("Internet status changed. New status:", data);
+        updateLogoutButton();
+      });
+      
     }
   };
 }]);

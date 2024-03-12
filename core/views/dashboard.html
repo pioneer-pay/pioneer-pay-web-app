@@ -1,3 +1,19 @@
+<p ng-show="isOnline && cachedTransfer">Pending Transfer:
+        <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
+        <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
+        <br><button type="submit" ng-click="onContinuePending()">Continue</button> 
+            <button type="submit" ng-click="onCancelPending()">Cancel</button>
+</p>
+<p ng-show="!isOnline && cachedTransfer" >Pending Transfer:
+    <!-- <li ng-repeat="transaction in cachedTransfer"> -->
+        <!-- <p>Sender currency: {{ cachedTransfer.baseCurrencyCode }}</p> -->
+        <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
+        <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
+        <!-- <button>Continue</button> <button>Cancel</button> -->
+    <!-- </li> -->
+  
+</p>
+
 <dash-nav></dash-nav>
 <div class="side-cont">
 
