@@ -39,7 +39,7 @@ wuApp.controller("dashboardController", [
 
 
     var sendMoneyQuery = $location.search();
-    var selectedTransaction = quickResendService.getSelectedTransaction();
+
     $scope.onClick = function () {
       $location.path('/transaction');
     };
@@ -96,13 +96,14 @@ wuApp.controller("dashboardController", [
           $scope.cardClicked = !$scope.cardClicked;
           console.log("Card clicked");
         };
+        convertCurrency();
       }
 
 
-      convertCurrency();
+      // 
       //init();
     });
-
+    // console.log("sender country code:"+typeof sendMoneyQuery.senderCountry)
 
 
 
@@ -159,8 +160,8 @@ wuApp.controller("dashboardController", [
         currencyCodeDisplayTo.textContent = selectedCountry.currency_code;
         currencyTo = selectedCountry.currency_code;
         console.log(currencyTo);
-        transactionService.setTargetCurrencyCode(currencyTo);
-        transactionService.getTargetCurrencyCode();
+        // transactionService.setTargetCurrencyCode(currencyTo);
+        // transactionService.getTargetCurrencyCode();
       } else {
         currencyCodeDisplayTo.textContent = "";
       }
@@ -176,8 +177,8 @@ wuApp.controller("dashboardController", [
         currencyCodeDisplayFrom.textContent = selectedCountry.currency_code;
         currencyFrom = selectedCountry.currency_code;
         console.log(selectedCountry.currency_code);
-        transactionService.setBaseCurrencyCode(currencyFrom);
-        transactionService.getBaseCurrencyCode();
+        // transactionService.setBaseCurrencyCode(currencyFrom);
+        // transactionService.getBaseCurrencyCode();
       } else {
         currencyCodeDisplayFrom.textContent = "";
       }
@@ -190,17 +191,17 @@ wuApp.controller("dashboardController", [
     let convertCurrency = () => {
 
       console.log('convertCurrency() called');
-      const selectedCountryFrom = document.getElementById("currencyCodeSend").textContent;
-      const selectedCountryTo = document.getElementById("currencyCodeReceive").textContent;
+      let selectedCountryFrom = sendMoneyQuery.senderCountry || document.getElementById("currencyCodeSend").textContent;
+
+      let selectedCountryTo = sendMoneyQuery.receiverCountry || document.getElementById("currencyCodeReceive").textContent;
+
       console.log(selectedCountryFrom + " " + selectedCountryTo);
-      let amount;
-      amount = sendMoneyQuery.amount
-        ? sendMoneyQuery.amount
-        : document.getElementById("amount").value;
 
-
+      var amount = sendMoneyQuery.amount || document.getElementById("amount").value
+      console.log(document.getElementById('amount').value);
       const amountReceiveInput = document.querySelector("#amountReceive");
-      console.log(amount);
+      transactionService.setBaseCurrencyCode(selectedCountryFrom);
+      transactionService.setTargetCurrencyCode(selectedCountryTo);
       transactionService.setAmount(amount);
       console.log(transactionService.getAmount());
 
@@ -215,8 +216,8 @@ wuApp.controller("dashboardController", [
             amount
           )
           .then(function (response) {
-            console.log(response.data);
             $scope.summary = response.data;
+            console.log("on line 226:" + $scope.summary);
             amountReceiveInput.value =
               $scope.summary.amount * $scope.summary.rate;
 
@@ -241,11 +242,13 @@ wuApp.controller("dashboardController", [
     amountInput.addEventListener("input", function () {
 
       clearTimeout(timeoutId);
+      var amount = sendMoneyQuery.amount || (amountInput.value.trim() !== "" ? amountInput.value : undefined);
+      if (amount !== undefined) {
+        timeoutId = $timeout(function () {
+          convertCurrency();
+        }, 3000);
+      }
 
-
-      timeoutId = $timeout(function () {
-        convertCurrency();
-      }, 3000);
     });
 
 
