@@ -70,38 +70,19 @@ wuApp.directive('basicNav', function () {
 });
 
 
-// wuApp.directive('dashNav', ['localStorageService', function (localStorageService) {
-//   return {
-//     templateUrl: 'directives/navdashboard.html',
-//     replace: true,
-//     controller: function ($scope,$location) {
-//       $scope.logout = function () {
-//         localStorageService.clearUserID('userId');
-//         $location.path('/login');
-//       };
-//     }
-//   };
-// }]);
-
-wuApp.directive('dashNav', ['localStorageService', 'notificationService', function(localStorageService, notificationService) {
+wuApp.directive('dashNav', ['localStorageService', function (localStorageService) {
   return {
-      templateUrl: 'directives/navdashboard.html',
-      replace: true,
-      controller: function($scope, $location) {
-          $scope.logout = function() {
-              localStorageService.clearUserID('userId');
-              $location.path('/login');
-          };
-
-          // Get unread notification count
-          var userId = localStorageService.getUserID();
-          notificationService.getUnreadCount(userId)
-              .then(function(unreadCount) {
-                  $scope.unreadCount = unreadCount;
-              });
-      }
+    templateUrl: 'directives/navdashboard.html',
+    replace: true,
+    controller: function ($scope,$location) {
+      $scope.logout = function () {
+        localStorageService.clearUserID('userId');
+        $location.path('/login');
+      };
+    }
   };
 }]);
+
 
 wuApp.directive('commonFooter', function () {
   return {

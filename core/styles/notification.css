@@ -29,7 +29,7 @@
 }
 
 .read {
-    opacity: 0.5; 
+    opacity: 0.6;
 }
 
 .mark-as-read {
@@ -43,4 +43,9 @@
 
 .mark-as-read:hover {
     background-color: #0056b3;
+}
+.read-indicator{
+    color:green;
+    font-weight:border;
+    font-size:2rem;
 }

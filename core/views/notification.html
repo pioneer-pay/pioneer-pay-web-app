@@ -3,10 +3,9 @@
     <div class="container-notify">
         <h1 style="text-align: center;">Notifications</h1>
         <div class="notifications">
-            <div class="notification" ng-repeat="notification in notifications" ng-class="{ 'unread': !notification.read, 'read': notification.read }">
-                <p class="message" ng-class="{ 'bold-text': !notification.read }">{{ notification.message }}
-                    <button class="mark-as-read" ng-click="markAsRead(notification.id)">Mark as Read</button>
-                </p>   
+            <div class="notification" ng-repeat="notification in notifications" >
+                <p class="message">{{ notification.message }}</p>
             </div>
+
         </div>
     </div>
