@@ -1,6 +1,16 @@
 let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap"]);
 
-wuApp.requires.push('InternetConnectivityConfig');
+wuApp.requires.push('InternetConnectivityService');
+
+wuApp.run(function($rootScope, $timeout) {
+  // Show splash screen initially
+  $rootScope.showSplash = true;
+
+  // Hide splash screen after 3 seconds
+  $timeout(function() {
+      $rootScope.showSplash = false;
+  }, 3000);
+});
 //ROUTING
 wuApp.config(function ($routeProvider) {
   $routeProvider
@@ -66,11 +76,11 @@ wuApp.directive('basicNav', function () {
   };
 });
 
-wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','internetConnectivityService', function (localStorageService,accountService,profileService,internetConnectivityService) {
+wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','networkInfoService', function (localStorageService,accountService,profileService,networkInfoService) {
   return {
     templateUrl: 'directives/navdashboard.html',
     replace: true,
-    controller: function ($scope,$location) {
+    controller: function ($scope,$location,$rootScope) {
       $scope.logout = function () {
         localStorageService.clearUserID('userId');
         accountService.clearAccountID('accountId');
@@ -79,6 +89,25 @@ wuApp.directive('dashNav', ['localStorageService', 'accountService','profileServ
         $location.path('/login');
       };
       $scope.userName = profileService.getUserName();
+      $scope.isOnline = networkInfoService.isOnline();
+      // $scope.logoutAvailable = false;
+      $scope.logoutAvailable = $scope.isOnline;
+
+      // if ($scope.isOnline) {
+      //   document.getElementById("logoutButton").removeAttribute("disabled");
+      //   $scope.logoutAvailable = true;
+      // }
+      
+
+      $rootScope.$on('internetStatusChanged', function (event, isOnline) {
+        $scope.isOnline = isOnline;
+        $scope.logoutAvailable = isOnline;
+        // if (isOnline) {
+        //   document.getElementById("logoutButton").removeAttribute("disabled");
+        // } else {
+        //   document.getElementById("logoutButton").setAttribute("disabled", "disabled");
+        // }
+      });
       
     }
   };

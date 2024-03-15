@@ -1,13 +1,14 @@
 wuApp.controller("dashboardController", [
   "$scope",
   "$http",
+  "$location",
   "$interval",
   "transactionService",
   "authService",
   "accountService",
   "localStorageService",
-  "internetConnectivityService",
-  function ($scope, $http, $interval, transactionService, authService, accountService,localStorageService,internetConnectivityService) {
+  "networkInfoService",
+  function ($scope, $http, $location, $interval, transactionService, authService, accountService,localStorageService,networkInfoService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -39,9 +40,9 @@ wuApp.controller("dashboardController", [
     $scope.onClick = function () {};
     //check internet connection
     console.log("online connection check!");
-    $scope.isOnline = internetConnectivityService.isOnline();
+    $scope.isOnline = networkInfoService.isOnline();
     function updateOnlineStatus() {
-    $scope.isOnline = internetConnectivityService.isOnline();
+    $scope.isOnline = networkInfoService.isOnline();
     const cachedTransfer = localStorage.getItem('cachedTransfer');
         if (cachedTransfer) {
             $scope.cachedTransfer = JSON.parse(cachedTransfer);
@@ -66,6 +67,17 @@ wuApp.controller("dashboardController", [
     
     $scope.onContinuePending = function(){
     console.log("offline transfer is being initiated");
+    $http.post("http://localhost:8083/api/transaction/initiate",$scope.cachedTransfer)
+            .then(function(response){
+              $scope.responseMessage = response.data.message;
+              console.log(response.data);
+              localStorage.removeItem('cachedTransfer');
+              $location.path("/status");
+              $scope.loading = false;
+            })
+            .catch(function(error){
+              console.log("Error:",error);
+            });
     };
     
     $scope.bankClicked = false;

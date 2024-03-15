@@ -6,8 +6,8 @@ wuApp.controller("loginController", [
   "authService",
   "localStorageService",
   "profileService",
-  "internetConnectivityService",
-  function ($scope, $location, $http,$timeout, authService,localStorageService,profileService,internetConnectivityService) {
+  "networkInfoService",
+  function ($scope, $location, $http,$timeout, authService,localStorageService,profileService,networkInfoService) {
     $scope.loginUser = {
       emailId: "",
       password: "",
@@ -17,7 +17,7 @@ wuApp.controller("loginController", [
     $scope.successMessage = "";
     
     console.log("online activity");
-    $scope.isOnline = internetConnectivityService.isOnline();
+    $scope.isOnline = networkInfoService.isOnline();
     console.log($scope.isOnline);
     
     //login user

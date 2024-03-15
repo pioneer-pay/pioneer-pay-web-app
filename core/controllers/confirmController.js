@@ -153,6 +153,7 @@ wuApp.controller("confirmController", [
               console.log("Error:",error);
               localStorage.setItem('cachedTransfer', JSON.stringify($scope.transaction));
               $scope.loading = false;
+              $location.path("/dashboard");
             });
     }
 

@@ -8,8 +8,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "network-information-api-polyfill": "^0.0.2"
-  }
+  "license": "ISC"
+  
 }
