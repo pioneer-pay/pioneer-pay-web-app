@@ -20,6 +20,10 @@
   align-items: center;
 }
 
+.disabled {
+  pointer-events: none; /* Disables pointer events */
+  opacity: 0.5; /* Applies a visual indication of being disabled */
+}
 .login-head h2 {
   margin: 1rem 0;
 }

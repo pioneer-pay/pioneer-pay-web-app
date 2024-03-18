@@ -22,6 +22,7 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fd0"/>
     <title>Western Union</title>
 
     <link
@@ -39,12 +40,14 @@
     <link rel="stylesheet" href="styles/userform.css" />
     <link rel="stylesheet" href="styles/statuspage.css" />
 
+    
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-route.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-resource.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-animate.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-touch.min.js"></script>
     <script src="assets/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="scripts/network-information-api-polyfill.js"></script>
     <script src="app.js"></script>
     <script src="controllers/loginController.js"></script>
     <script src="controllers/accountController.js"></script>
@@ -56,17 +59,39 @@
     <script src="assets/countries.js"></script>
     <script src="controllers/receiverController.js"></script>
     <script src="controllers/transactionController.js"></script>
-    <script src="controllers/summaryController.js"></script>
     <script src="controllers/confirmController.js"></script>
     <script src="controllers/statusController.js"></script>
+    
 
     <script src="service/authService.js"></script>
     <script src="service/accountService.js"></script>
     <script src="service/transactionService.js"></script>
     <script src="service/localStorageService.js"></script>
+    <script src="service/profileService.js"></script>
+    <script src="service/internetConnectivityService.js"></script>
+    <script src="service/networkInfoService.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
+    
+    <!-- <div class="bg-loader" ng-show="showSplash">
+      <img id="splash" src="assets/splash-w.png" style=" width: 50px; height: 50px;">
+    </div> -->
+    <p ng-show="isOnline">You are online.</p>
+    <p ng-hide="isOnline" style="background-color: red;">You are offline.</p>
     <div ng-view></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('./sw.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            console.log('ServiceWorker:', registration);
+          }, function(err) {
+            console.error('ServiceWorker registration failed: ', err);
+            console.error('Error Details:', err.message, err.filename, err.lineno, err.colno, err.stack);
+          });
+        });
+      }
+    </script>
   </body>
 </html>
