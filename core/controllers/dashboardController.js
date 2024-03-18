@@ -6,8 +6,8 @@ wuApp.controller("dashboardController", [
   "authService",
   "accountService",
   "localStorageService",
-  "internetConnectivityService",
-  function ($scope, $http, $interval, transactionService, authService, accountService,localStorageService,internetConnectivityService) {
+  "networkInfoService",
+  function ($scope, $http, $interval, transactionService, authService, accountService,localStorageService,networkInfoService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -39,9 +39,9 @@ wuApp.controller("dashboardController", [
     $scope.onClick = function () {};
     //check internet connection
     console.log("online connection check!");
-    $scope.isOnline = internetConnectivityService.isOnline();
+    $scope.isOnline = networkInfoService.isOnline();
     function updateOnlineStatus() {
-    $scope.isOnline = internetConnectivityService.isOnline();
+    $scope.isOnline = networkInfoService.isOnline();
     const cachedTransfer = localStorage.getItem('cachedTransfer');
         if (cachedTransfer) {
             $scope.cachedTransfer = JSON.parse(cachedTransfer);
