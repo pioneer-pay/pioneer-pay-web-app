@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="styles/profile.css" />
     <link rel="stylesheet" href="styles/userform.css" />
     <link rel="stylesheet" href="styles/statuspage.css" />
+    <link rel="stylesheet" href="styles/reminderModalContent.css"/>
     <link rel="stylesheet" href="styles/notification.css">
    
     
@@ -47,6 +48,9 @@
     <script src="https://code.angularjs.org/1.8.2/angular-resource.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-animate.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-touch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+   
+    
     <script src="assets/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="scripts/network-information-api-polyfill.js"></script>
     <script src="app.js"></script>
@@ -62,14 +66,20 @@
     <script src="controllers/transactionController.js"></script>
     <script src="controllers/confirmController.js"></script>
     <script src="controllers/statusController.js"></script>
+    <script src="controllers/reminderModalController.js"></script>
+    <script src="controllers/confirmController.js"></script>
+    <script src="controllers/statusController.js"></script>
     <script src="controllers/notificationController.js"></script>
+
     <script src="service/authService.js"></script>
     <script src="service/accountService.js"></script>
     <script src="service/transactionService.js"></script>
     <script src="service/localStorageService.js"></script>
+    <script src="service/dateTimePickerService.js"></script>
     <script src="service/profileService.js"></script>
     <script src="service/internetConnectivityService.js"></script>
     <script src="service/networkInfoService.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
