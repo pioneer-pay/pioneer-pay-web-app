@@ -26,14 +26,18 @@
     <div class="dashboard-dropdown">
       <div class="dashboard-select">
         <label for="countrySelect">Send from:</label>
-        <select id="countrySelectFrom">
+
+        <select id="countrySelectFrom" ng-model="selectedSourceCountry">
           <option value="" id="optionFrom">Select Country</option>
+
         </select>
       </div>
       <div class="dashboard-select">
         <label for="countrySelect">Send to:</label>
-        <select id="countrySelectTo">
+
+        <select id="countrySelectTo" ng-model="selectedDestinationCountry">
           <option value="" id="optionTo">Select Country</option>
+
         </select>
       </div>
     </div>
@@ -71,6 +75,16 @@
             <p>Bank Account</p>
 
           </div>
+          
+          <!-- <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
+            <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
+            <p>Bank Account</p>
+          </div>
+
+          <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
+            <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
+            <p>Bank Account</p>
+          </div> -->
         </div>
         <div class="heading2">
           <img class="idea-icon" src="assets/idea.png" alt="Idea Icon" />
@@ -78,18 +92,24 @@
             We do over 500,000 online money transactions globally every month.
           </p>
         </div>
-        <div class="heading3">
-          <div class="input-half-width">
-            <label for="amount">Send Amount</label>
-            <input type="text" class="input-lg" id="amount"  />
-            <p>Currency: <span id="currencyCodeSend"></span></p>
-          </div>
 
-          <img class="ex-icon" src="assets/exchange.png" alt="Idea Icon" />
-          <div class="input-half-width">
-            <label>Receive Amount</label>
-            <input type="text" class="input-lg" id="amountReceive" />
-            <p>Currency: <span id="currencyCodeReceive"></span></p>
+      </div>
+      <hr />
+      <div>
+        <p class="heading">How would you like to pay?</p>
+        <div class="sender-card">
+          <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 1}" ng-click="setSelectedPaymentMethod(1, 'CardPayment')" >
+            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+            <p>Card Payment</p>
+          </div>
+          <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 2}" ng-click="setSelectedPaymentMethod(2, 'BankTransfer')">
+            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+            <p>Bank Transfer</p>
+          </div>
+          <div class="card-content1" ng-class="{ 'clicked':  selectedCardId === 3 }"  ng-click="setSelectedPaymentMethod(3, 'UpiPayment')">
+            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+            <p>UPI Payment</p>
+
           </div>
 
         </div>
@@ -114,29 +134,22 @@
             </p>
           </div>
         </div>
-        <hr />
-        <div>
-          <p class="heading">How would you like to pay?</p>
-          <div class="sender-card">
-            <div class="card-content1" ng-class="{ 'clicked': cardClicked }" ng-click="toggleCardClicked()">
-              <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
-              <p>Card Details</p>
-            </div>
-          </div>
-          <div class="heading2">
-            <img class="money-icon" src="assets/check-mark.png" alt="Checkmark Icon" ng-click="changeColor('money')"
-              ng-class="{ 'clicked': isClicked('money') }" />
-            <p>You have chosen the best price option.</p>
-          </div>
-        </div>
-        <hr />
-        <a href="" ng-click="onClick()">
-          <button type="submit" class="btn btn-primary btn-lg btn-block button-login" >
-            Continue
-          </button>
-        </a>
-      </form>
-    </div>
+
+      </div>
+      <hr />
+      <button type="button" class="btn btn-primary btn-lg btn-block button-login" ng-click="openReminderModal()">Add Reminder for Payment</button>
+      <br>
+      <a href="#!/transaction">
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg btn-block button-login"
+        ng-click="onClick()"
+      >
+        Continue
+      </button>
+      </a>
+    </form>
+
   </div>
 
   <div class="summary-cont">

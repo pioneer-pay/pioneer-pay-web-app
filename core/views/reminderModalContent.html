@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Add Payment Reminder</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+      <div class="form-group">
+        <label for="sourceCountry">Sender's Country:</label>
+        <input type="text" class="form-control" id="sourceCountry" ng-model="reminderDetails.sourceCountry" readonly>
+      </div>
+      <div class="form-group">
+        <label for="destinationCountry">Receiver's Country:</label>
+        <input type="text" class="form-control" id="destinationCountry" ng-model="reminderDetails.destinationCountry" readonly>
+      </div>
+      <div class="form-group">
+        <label for="paymentMethod">Payment Method of sender:</label>
+        <input type="text" class="form-control" id="paymentMethod" ng-model="reminderDetails.paymentMethod" readonly>
+      </div>
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="text" class="form-control" id="amount" ng-model="reminderDetails.amount" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="reminderDate">Reminder Date:</label>
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="reminderDetails.reminderDate" is-open="popup.opened" datepicker-options="dateOptions" close-text="Close" readonly />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+    </div>
+
+    <div class="form-group"  >
+      <label for="reminderTime">Reminder Time:</label>
+      <timepicker ng-model="reminderDetails.reminderTime" uib-timepicker ng-change="changed()" hour-step="1" minute-step="1" show-meridian="true"></timepicker>
+    </div>
+
+    
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
