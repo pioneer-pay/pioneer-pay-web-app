@@ -36,6 +36,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/profile.html',
       controller: 'profileController',
     })
+    .when('/dashboard/notification',{
+      templateUrl:'views/notification.html',
+      controller: 'notificationController'
+    })
     .when('/dashboard/profile/addProfile',{
       templateUrl: 'views/addProfile.html',
       controller: 'addProfileController',
@@ -76,6 +80,7 @@ wuApp.directive('basicNav', function () {
   };
 });
 
+
 wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','networkInfoService', function (localStorageService,accountService,profileService,networkInfoService) {
   return {
     templateUrl: 'directives/navdashboard.html',
@@ -112,6 +117,7 @@ wuApp.directive('dashNav', ['localStorageService', 'accountService','profileServ
     }
   };
 }]);
+
 
 wuApp.directive('commonFooter', function () {
   return {
