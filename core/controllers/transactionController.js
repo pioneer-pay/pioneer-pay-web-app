@@ -91,6 +91,7 @@ wuApp.controller("transactionController", [
     $scope.onClick = function (accountid) {
       transactionService.setReceiverAccountID(accountid);
       console.log(accountid);
+      // localStorage.setItem('cachedReceiver', JSON.stringify(response.data));
     };
 
 
@@ -99,8 +100,26 @@ wuApp.controller("transactionController", [
       $location.path("/dashboard/confirmation");
     }
 
+ 
+    $http
+          .get("http://localhost:8082/api/account/get/"+accountId)
+            .then(function(response){
+              console.log(response.data);
+              $scope.allAccounts=response.data;
+              console.log(response.data);
+            })
+            .catch(function(error){
+              console.log("Error:",error);
+              const cachedAccounts = localStorage.getItem('cachedAccounts');
+                    if (cachedAccounts) {
+                        $scope.allAccounts = JSON.parse(cachedAccounts);
+                    } else {
+                        // Handle case when there's no cached data available
+                        $scope.allAccounts = null;
+                    }
+            });
+          },
 
-  },
 
 
 ])

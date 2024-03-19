@@ -1,25 +1,75 @@
 <dash-nav></dash-nav>
 <div class="side-cont">
 
-  <div class="profile-body dash-cont">
-    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white;" class=" container">
 
-      <h2>Send Money Online</h2>
-      <hr>
-      <form name="dashboard" class="sender-form">
-        <div class="heading">Select the country and send amount!</div>
-        <div class="dashboard-dropdown">
-          <div class="dashboard-select">
-            <label for="countrySelect">Send from:</label>
-            <select id="countrySelectFrom">
-              <option value="" id="optionFrom">Select Country</option>
-            </select>
-          </div>
-          <div class="dashboard-select">
-            <label for="countrySelect">Send to:</label>
-            <select id="countrySelectTo">
-              <option value="" id="optionTo">Select Country</option>
-            </select>
+
+<div class="profile-body dash-cont">
+  <div
+    style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white;"
+    class=" container"
+  > 
+
+  <h2>Send Money Online</h2>
+  <hr>
+  <p ng-show="isOnline && cachedTransfer">Pending Transfer:
+    <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
+    <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
+    <br><button type="submit" ng-click="onContinuePending()">Continue</button> 
+        <button type="submit" ng-click="onCancelPending()">Cancel</button>
+  </p>
+  <p ng-show="!isOnline && cachedTransfer" >Pending Transfer:
+    <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
+    <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
+  </p>
+<form name="dashboard" class="sender-form">
+    <div class="heading">Select the country and send amount!</div>
+    <div class="dashboard-dropdown">
+      <div class="dashboard-select">
+        <label for="countrySelect">Send from:</label>
+        <select id="countrySelectFrom">
+          <option value="" id="optionFrom">Select Country</option>
+        </select>
+      </div>
+      <div class="dashboard-select">
+        <label for="countrySelect">Send to:</label>
+        <select id="countrySelectTo">
+          <option value="" id="optionTo">Select Country</option>
+        </select>
+      </div>
+    </div>
+    <div class="heading2">
+      <img class="idea-icon" src="assets/idea.png" alt="Idea Icon" />
+      <p>
+        We do over 500,000 online money transactions globally every month.
+      </p>
+    </div>
+  <div class="heading3">
+    <div class="input-half-width">
+      <label for="amount">Send Amount</label>
+      <input type="text" class="input-lg" id="amount" />
+      <p>Currency: <span id="currencyCodeSend"></span></p>
+    </div>
+
+    <img class="ex-icon" src="assets/exchange.png" alt="Idea Icon" />
+    <div class="input-half-width">
+      <label>Receive Amount</label>
+      <input type="text" class="input-lg" id="amountReceive" />
+      <p>Currency: <span id="currencyCodeReceive"></span></p>
+    </div>
+
+  </div>
+  <button id="convert-button">Convert</button>
+    <p id="result"></p>
+  <hr />
+
+      <div>
+
+        <p class="heading">How does your receiver want the money?</p>
+        <div class="sender-card">
+          <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
+            <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
+            <p>Bank Account</p>
+
           </div>
         </div>
         <div class="heading2">
