@@ -19,11 +19,15 @@ function($scope,$http,$location,authService,localStorageService){
     state:''
   };
 
+  $scope.cancelUpdate = function(){
+    $location.path("/dashboard/profile");
+  };
+
   //show user profile details
-  let userId=localStorageService.getUserID();
-  let id=authService.getUserID();
+  let id=localStorageService.getUserID();
+
   $http
-  .get("http://localhost:8081/api/user/"+userId)
+  .get("http://localhost:8081/api/user/"+id)
   .then(function(response){
      console.log(response.data);
      $scope.user= response.data;
@@ -38,7 +42,7 @@ function($scope,$http,$location,authService,localStorageService){
     $scope.updateDetails= function(form){
         console.log($scope.user);
         $http
-          .put("http://localhost:8081/api/user/update/"+userId, $scope.user)
+          .put("http://localhost:8081/api/user/update/"+id, $scope.user)
           .then(function(response){
             console.log(response.data);
             Swal.fire("User details updated Successfully!!");

@@ -3,9 +3,10 @@ wuApp.controller("accountController", [
     "$http",
     "$location",
     "authService",
-    "accountService",
     "localStorageService",
-    function($scope,$http,$location,authService,accountService,localStorageService){
+    "accountService",
+    function($scope,$http,$location,authService,localStorageService,accountService){
+
     $scope.account={
       accountHolderName:"",
         bankName:"",
@@ -13,11 +14,15 @@ wuApp.controller("accountController", [
         balance:"",
         ifscCode:"",
     };
+    
+    //cancel update
+    $scope.cancelUpdate = function(){
+        $location.path("/dashboard/profile");
+    };
 
     //show account details
-    var userId=localStorageService.getUserID();
-    var id=authService.getUserID();
-    $http.get("http://localhost:8081/api/user/account/"+userId)
+    var id=localStorageService.getUserID();
+    $http.get("http://localhost:8081/api/user/account/"+id)
             .then(function(response){
                 console.log(response.data);
                 $scope.account=response.data[0];
@@ -29,7 +34,7 @@ wuApp.controller("accountController", [
      $scope.submit= function(form){
         console.log($scope.account);
         $http
-             .put("http://localhost:8082/api/account/update/"+userId, $scope.account)
+             .put("http://localhost:8082/api/account/update/"+id, $scope.account)
              .then(function(response){
                   console.log(response.data);
                   Swal.fire("User bank details updated Successfully!!");
