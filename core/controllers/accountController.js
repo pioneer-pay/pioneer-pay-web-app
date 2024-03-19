@@ -3,8 +3,8 @@ wuApp.controller("accountController", [
     "$http",
     "$location",
     "authService",
-    "accountService",
     "localStorageService",
+    "accountService",
     
     function($scope,$http,$location,authService,localStorageService,accountService){
 
@@ -36,7 +36,7 @@ wuApp.controller("accountController", [
      $scope.submit= function(form){
         console.log($scope.account);
         $http
-             .put("http://localhost:8082/api/account/update/"+userId, $scope.account)
+             .put("http://localhost:8082/api/account/update/"+id, $scope.account)
              .then(function(response){
                   console.log(response.data);
                   Swal.fire("User bank details updated Successfully!!");
