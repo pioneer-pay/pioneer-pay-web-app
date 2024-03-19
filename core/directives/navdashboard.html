@@ -1,13 +1,19 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid nav-bg">
     <div class="navbar-header">
+<<<<<<< HEAD
       <img class="nav-logo" src="assets/w.png" />
       <a class="navbar-brand" style="color: white" href="#">Welcome!</a>
+=======
+      <img class="nav-logo" src="./assets/w.png" />
+      <a class="navbar-brand" style="color: white" href="#">Welcome, {{userName}}!</a>
+>>>>>>> 54e6446f441d744459d586baaab591713c6a7fc6
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li>
         <a href="#!/dashboard"  style="color: white">Send Money</a>
        </li>
+<<<<<<< HEAD
       <li>
         <a href="#!/dashboard/history"  style="color: white">History</a>
        </li>
@@ -25,6 +31,29 @@
           <span class="glyphicon glyphicon-log-out" style="color:white;"></span>
         </a>
       </li>
+=======
+      
+      <li>
+        <a href="#!/dashboard/history"  style="color: white">History</a>
+       </li>
+       <!-- <li>
+        <a href="#!/home"  style="color: white">Help</a>
+       </li> -->
+       <li>
+        <a href="#!/dashboard/profile"  style="color: white">
+          <span class="glyphicon glyphicon-user" style="color:white;"></span></a>
+       </li>
+      <!-- <li class="login">
+        <a  ng-click="logout()" id="logoutBtn" style="color: #ffdd00">
+          <span class="glyphicon glyphicon-log-out" style="color:white;"></span></a>
+      </li> -->
+      <li class="login">
+        <a ng-click="logout()" id="logoutBtn" ng-class="{ 'disabled': !logoutAvailable }" ng-style="{ 'color': logoutAvailable ? '#ffdd00' : '#ccc' }">
+            <span class="glyphicon glyphicon-log-out" style="color:white;"></span>
+        </a>
+    </li>
+      <!-- <li><button id="logoutButton" ng-click="logout()" disabled>Logout</button></li> -->
+>>>>>>> 54e6446f441d744459d586baaab591713c6a7fc6
     </ul>
   </div>
 </nav>

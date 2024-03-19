@@ -5,7 +5,9 @@ wuApp.controller("accountController", [
     "authService",
     "accountService",
     "localStorageService",
-    function($scope,$http,$location,authService,accountService,localStorageService){
+    
+    function($scope,$http,$location,authService,localStorageService,accountService){
+
     $scope.account={
       accountHolderName:"",
         bankName:"",
@@ -13,11 +15,16 @@ wuApp.controller("accountController", [
         balance:"",
         ifscCode:"",
     };
+    
+    //cancel update
+    $scope.cancelUpdate = function(){
+        $location.path("/dashboard/profile");
+    };
 
     //show account details
-    var id=authService.getUserID();
-    var userId=localStorageService.getUserID();
-    $http.get("http://localhost:8081/api/user/account/"+userId)
+    var id=localStorageService.getUserID();
+    $http.get("http://localhost:8081/api/user/account/"+id)
+
             .then(function(response){
                 console.log(response.data);
                 $scope.account=response.data[0];

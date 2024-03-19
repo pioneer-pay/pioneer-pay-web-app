@@ -47,7 +47,7 @@ wuApp.controller("confirmController", [
     };
 
     $scope.exchangeRateFinal = "";
-
+    $scope.allAccounts= "";
     var receiverAccountId = transactionService.getReceiverAccountID();
     console.log(receiverAccountId);
     var source=transactionService.getBaseCurrencyCode();
@@ -60,15 +60,24 @@ wuApp.controller("confirmController", [
 
     //sender details
     var id = authService.getUserID();
+    var accid= accountService.getAccountID();
     $http
-      .get("http://localhost:8081/api/user/account/" +id)
+      .get("http://localhost:8082/api/account/details/"+accid)
       .then(function (response) {
         console.log(response.data);
-        $scope.senderAccount = response.data[0];
+        console.log("sender account");
+        $scope.senderAccount = response.data;
         console.log($scope.senderAccount);
       })
       .catch(function (error) {
         console.log("Error:", error);
+        const cachedSender = localStorage.getItem('cachedSender');
+                    if (cachedSender) {
+                        $scope.senderAccount = JSON.parse(cachedSender);
+                    } else {
+                        // Handle case when there's no cached data available
+                        $scope.senderAccount = null;
+                    }
       });
 
 
@@ -77,12 +86,21 @@ wuApp.controller("confirmController", [
     .then(function(response){
       console.log(response.data);
       $scope.summary=response.data;
-      result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+       result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
       result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
       console.log($scope.summary);
     })
     .catch(function(error){
       console.log("Error:",error);
+      const cachedSummary = localStorage.getItem('cachedSummary');
+                    if (cachedSummary) {
+                        $scope.summary = JSON.parse(cachedSummary);
+                        result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+                        result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+                    } else {
+                        // Handle case when there's no cached data available
+                        $scope.summary = null;
+                    }
     });
     
 
@@ -90,12 +108,29 @@ wuApp.controller("confirmController", [
     $http
       .get("http://localhost:8082/api/account/details/"+receiverAccountId)
       .then(function (response) {
-        console.log("hello");
+        console.log("receiver account");
         $scope.recieverAccount = response.data;
         console.log($scope.recieverAccount);
       })
       .catch(function (error) {
         console.log("Error:", error);
+        const cachedAccounts = localStorage.getItem('cachedAccounts');
+                    if (cachedAccounts) {
+                        $scope.allAccounts = JSON.parse(cachedAccounts); 
+                        const desiredAccount = $scope.allAccounts.find(function(account) {
+                          return account.accountId === receiverAccountId;
+                      }); 
+                      if (desiredAccount) {
+                          // Assign the desired account to $scope.recieverAccount
+                          $scope.recieverAccount = desiredAccount;
+                          console.log("Receiver account from cache:", $scope.recieverAccount);
+                      } else {
+                          console.log("Account with accountId", receiverAccountId, "not found in cached accounts.");
+                      }
+                    } else {
+                        // Handle case when there's no cached data available
+                        $scope.allAccounts = null;
+                    }
       });
 
     //---------------------Initiate Transaction----------------------------//
@@ -116,7 +151,9 @@ wuApp.controller("confirmController", [
             })
             .catch(function(error){
               console.log("Error:",error);
+              localStorage.setItem('cachedTransfer', JSON.stringify($scope.transaction));
               $scope.loading = false;
+              $location.path("/dashboard");
             });
     }
 
