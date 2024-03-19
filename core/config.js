@@ -1,0 +1,1 @@
+angular.module("appConfig", []).constant("BACKEND_URL", "http://localhost:8081");

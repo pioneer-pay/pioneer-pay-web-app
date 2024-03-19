@@ -1,4 +1,3 @@
-
 <dash-nav></dash-nav>
 
 <div class="container mt-5" style="min-height: 90vh;">
@@ -15,6 +14,7 @@
           <th scope="col">Commission</th>
           <th scope="col">Received amount</th>
           <th scope="col">Status</th>
+          <th scope="col">Action</th> <!-- New column for Action -->
         </tr>
       </thead>
       <tbody ng-repeat="t in transaction">
@@ -26,9 +26,14 @@
         <td>{{t.commission}} {{t.baseCurrencyCode}}</td>
         <td>{{t.transferedAmount}} {{t.targetCurrencyCode}}</td>
         <td>{{t.status}}</td>
+        <td>
+          <!-- Button for quick resend -->
+          <button ng-click="quickResend(t)" class="btn btn-default quick-resend-btn">Resend</button>
+        </td>
       </tbody>
     </table>
   </div>
 </div>
+
 
 <common-footer></common-footer>

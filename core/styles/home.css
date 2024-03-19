@@ -92,11 +92,23 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.quick-resend-btn {
+
+  background-color: rgb(3, 84, 150);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+
 .send {
   background: black;
   border-radius: 30px;
   color: #fd0;
 }
+
 .send:hover {
   background: #313030;
   color: #fd0;
@@ -131,6 +143,7 @@ body {
   margin-bottom: 0px;
   font-size: 1.8rem;
 }
+
 .icons {
   width: 5%;
   height: 5%;
@@ -198,7 +211,7 @@ body {
   font-size: 1.5rem;
 }
 
-.footer-a{
+.footer-a {
   font-size: smaller;
   margin: 10px;
   padding: 20px;
@@ -207,13 +220,14 @@ body {
 
 }
 
-.para1{
-    color: rgb(102,102,102);
+.para1 {
+  color: rgb(102, 102, 102);
 }
 
-.para2{
-  color:rgb(35,35,35)
+.para2 {
+  color: rgb(35, 35, 35)
 }
+
 
 
 .bg-loader {
@@ -228,80 +242,100 @@ body {
   overflow: hidden;
 }
 
+
 @media only screen and (max-width: 600px) {
   .navbar {
     flex-direction: column;
     align-items: center;
   }
+
   .nav-logo {
     width: 20%;
     height: 20%;
   }
+
   .navbar-brand {
     font-size: 2rem;
     padding-left: 0;
   }
+
   .navbar-right {
     font-size: 1.5rem;
     padding-right: 0;
   }
+
   .title {
     font-size: 3rem;
     padding-left: 1rem;
   }
+
   .info {
     font-size: 1.5rem;
     padding-left: 1rem;
   }
+
   .img-main {
     width: 100%;
   }
+
   .send-btn {
     padding: 1rem;
   }
+
   .send-btn-text {
     padding-left: 0.5rem;
     margin-bottom: 1rem;
   }
+
   .svg-text {
     padding: 1rem 1rem;
   }
+
   .strong-text {
     font-size: 1.5rem;
     margin-left: 0.5rem;
   }
+
   .info-bar .bar1 {
     font-size: 2rem;
     padding: 1rem;
   }
+
   .bar1 p {
     font-size: 1.3rem;
   }
+
   .icons {
     width: 10%;
     height: 10%;
     margin-right: 0.5rem;
   }
+
   .embed-vid {
     margin: 1rem auto;
     padding: 2rem;
   }
+
   .get-started {
     font-size: 1.2rem;
     padding: 1rem;
     margin: 0.8rem 0;
   }
+
   .icons-desc {
     width: 10%;
     height: 10%;
     margin-right: 0.5rem;
   }
+
   .desc {
     margin: 1rem auto;
   }
+
   .foot {
     padding: 1rem 5rem;
   }
+
   .foot p {
     font-size: 1rem;
   }

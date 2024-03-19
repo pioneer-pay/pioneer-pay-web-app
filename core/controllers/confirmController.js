@@ -6,53 +6,53 @@ wuApp.controller("confirmController", [
   "authService",
   "accountService",
   "transactionService",
-  function ($scope, $http, $location, $rootScope, authService,accountService,transactionService) {
+  function ($scope, $http, $location, $rootScope, authService, accountService, transactionService) {
     $scope.senderAccount = {
-      accountHolderName:"",
+      accountHolderName: "",
       accountId: "",
       bankName: "",
       accountNo: "",
       balance: "",
-      ifscCode:""
+      ifscCode: ""
     };
 
     $scope.recieverAccount = {
-      accountHolderName:"",
+      accountHolderName: "",
       accountId: "",
       bankName: "",
       accountNo: "",
       balance: "",
-      ifscCode:""
+      ifscCode: ""
     };
-    
-    $scope.summary={
-      amount:'',
-      commission:'',
-      receivedMoney:'',
-      rate:'',
-      baseCurrencyCode:'',
-      targetCurrencyCode:''
-  };
+
+    $scope.summary = {
+      amount: '',
+      commission: '',
+      receivedMoney: '',
+      rate: '',
+      baseCurrencyCode: '',
+      targetCurrencyCode: ''
+    };
     $scope.transaction = {
-      transactionId:"",
-      fromAccountId:"",
-      toAccountId:"",
-      dateTime:"",
-      baseCurrencyCode:"",
-      targetCurrencyCode:"",
-      amount:"",
-      transferedAmount:"",
-      commission:"",
-      status:""
+      transactionId: "",
+      fromAccountId: "",
+      toAccountId: "",
+      dateTime: "",
+      baseCurrencyCode: "",
+      targetCurrencyCode: "",
+      amount: "",
+      transferedAmount: "",
+      commission: "",
+      status: ""
     };
 
     $scope.exchangeRateFinal = "";
     $scope.allAccounts= "";
     var receiverAccountId = transactionService.getReceiverAccountID();
     console.log(receiverAccountId);
-    var source=transactionService.getBaseCurrencyCode();
-    var target=transactionService.getTargetCurrencyCode();
-    var amt=transactionService.getAmount();
+    var source = transactionService.getBaseCurrencyCode();
+    var target = transactionService.getTargetCurrencyCode();
+    var amt = transactionService.getAmount();
 
 
     //confirm details and proceed transaction
@@ -62,7 +62,9 @@ wuApp.controller("confirmController", [
     var id = authService.getUserID();
     var accid= accountService.getAccountID();
     $http
+
       .get("http://localhost:8082/api/account/details/"+accid)
+
       .then(function (response) {
         console.log(response.data);
         console.log("sender account");
@@ -82,6 +84,7 @@ wuApp.controller("confirmController", [
 
 
     //summary of transaction
+
     $http.get("http://localhost:8083/api/transaction/summary/"+source+"/"+target+"/"+amt)
     .then(function(response){
       console.log(response.data);
@@ -104,9 +107,10 @@ wuApp.controller("confirmController", [
     });
     
 
+
     //receiver details
     $http
-      .get("http://localhost:8082/api/account/details/"+receiverAccountId)
+      .get("http://localhost:8082/api/account/details/" + receiverAccountId)
       .then(function (response) {
         console.log("receiver account");
         $scope.recieverAccount = response.data;
@@ -134,14 +138,15 @@ wuApp.controller("confirmController", [
       });
 
     //---------------------Initiate Transaction----------------------------//
-    let accountId=accountService.getAccountID();
-    $scope.initiateTransaction=function(){
-      $scope.transaction.fromAccountId=accountId;
-      $scope.transaction.toAccountId=transactionService.getReceiverAccountID();
-      $scope.transaction.amount=amt;
-      $scope.transaction.baseCurrencyCode=source;
-      $scope.transaction.targetCurrencyCode=target;
+    let accountId = accountService.getAccountID();
+    $scope.initiateTransaction = function () {
+      $scope.transaction.fromAccountId = accountId;
+      $scope.transaction.toAccountId = transactionService.getReceiverAccountID();
+      $scope.transaction.amount = amt;
+      $scope.transaction.baseCurrencyCode = source;
+      $scope.transaction.targetCurrencyCode = target;
       console.log($scope.transaction);
+
       $http.post("http://localhost:8083/api/transaction/initiate",$scope.transaction)
             .then(function(response){
               $scope.responseMessage = response.data.message;
@@ -155,6 +160,7 @@ wuApp.controller("confirmController", [
               $scope.loading = false;
               $location.path("/dashboard");
             });
+
     }
 
 
