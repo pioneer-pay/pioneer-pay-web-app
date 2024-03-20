@@ -3,8 +3,9 @@ wuApp.controller("profileController", [
     "$http",
     "authService",
     "accountService",
+    "networkInfoService",
     "localStorageService",
-    function($scope,$http,authService,accountService,localStorageService){
+    function($scope,$http,authService,accountService,networkInfoService,localStorageService){
       $scope.user = {
         firstName: '',
         lastName: '',
@@ -27,6 +28,13 @@ wuApp.controller("profileController", [
     };
 
 
+    //internet connection
+    $scope.$on('internetStatusChanged', function (event, isOnline) {
+      $scope.isOnline = isOnline;
+      // Update other buttons on the profile page based on online status if needed
+      // console.log("profile");
+    });
+
     //show profile details
     var id= authService.getUserID();
     var userId = localStorageService.getUserID();
@@ -47,6 +55,7 @@ wuApp.controller("profileController", [
                 console.log(response.data);
                 $scope.account=response.data[0];
                 $scope.accountId=response.data[0].accountId;
+                // accountService.setAccountID=response.data[0].accountId;
                 console.log($scope.account);
             });
 

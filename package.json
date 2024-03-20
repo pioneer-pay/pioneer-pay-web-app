@@ -1,0 +1,13 @@
+{
+  "name": "pioneer-pay-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "http-server -p 1337 core -c-1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+  
+}
