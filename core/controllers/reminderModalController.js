@@ -10,22 +10,22 @@ wuApp.controller('reminderModalController', [
      $scope.reminderDetails = reminderDetails;
      var emailId = authService.getEmailID();
      console.log(emailId);
-    
-    
+
+
     // Use the DateTimePickerService to get date options
     $scope.dateOptions = dateTimePickerService.getDatePickerOptions();
     $scope.format = 'yyyy/MM/dd/'; // Set the format for the date
     $scope.popup = {
         opened: false
     };
-    
+
     $scope.open = function() {
         $scope.popup.opened = true;
     };
-    
+
     // Use the formatTime function from DateTimePickerService
     $scope.formatTime = dateTimePickerService.formatTime;
-    
+
     $scope.ok = function () {
         // Implement submission logic here, possibly using $http to send data to your backend
         var formattedTime = $scope.formatTime($scope.reminderDetails.reminderTime);
@@ -55,6 +55,6 @@ wuApp.controller('reminderModalController', [
         $uibModalInstance.dismiss('cancel');
     };
 
-   
+
 }]);
 

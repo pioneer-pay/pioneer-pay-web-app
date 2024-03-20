@@ -25,7 +25,6 @@ function($scope,$http,$location,authService,localStorageService){
 
   //show user profile details
   let id=localStorageService.getUserID();
-
   $http
   .get("http://localhost:8081/api/user/"+id)
   .then(function(response){

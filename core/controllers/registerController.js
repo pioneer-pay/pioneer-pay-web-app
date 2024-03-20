@@ -2,13 +2,12 @@ wuApp.controller("registerController", [
   "$scope",
   "$http",
   "$location",
-  "authService",
-  function ($scope, $http,$location,authService) {
+  function ($scope, $http,$location) {
     $scope.user = {
       emailId: "",
       password: "",
     };
-   
+
     //register user with emailId and password
     $scope.signup = function (form) {
       console.log($scope.user);
@@ -19,12 +18,10 @@ wuApp.controller("registerController", [
           if (response.data.status === true) {
             $scope.errorMessage = null;
             $scope.responseMessage = response.data.message;
-            // $scope.user = {
-            //   emailId: "",
-            //   password: "",
-            // };
-            // authService.setEmailID($scope.user.emailId);
-            // console.log(authService.getEmailID());
+            $scope.user = {
+              emailId: "",
+              password: "",
+            };
             form.$setPristine();
             form.$setUntouched();
             $location.path("/login")

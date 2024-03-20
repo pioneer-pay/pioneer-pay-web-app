@@ -1,20 +1,18 @@
 <dash-nav></dash-nav>
 <div class="side-cont">
 
-
-
 <div class="profile-body dash-cont">
   <div
     style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white;"
     class=" container"
-  > 
+  >
 
   <h2>Send Money Online</h2>
   <hr>
   <p ng-show="isOnline && cachedTransfer">Pending Transfer:
     <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
     <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
-    <br><button type="submit" ng-click="onContinuePending()">Continue</button> 
+    <br><button type="submit" ng-click="onContinuePending()">Continue</button>
         <button type="submit" ng-click="onCancelPending()">Cancel</button>
   </p>
   <p ng-show="!isOnline && cachedTransfer" >Pending Transfer:
@@ -26,18 +24,14 @@
     <div class="dashboard-dropdown">
       <div class="dashboard-select">
         <label for="countrySelect">Send from:</label>
-
-        <select id="countrySelectFrom" ng-model="selectedSourceCountry">
-          <option value="" id="optionFrom">Select Country</option>
-
+        <select id="countrySelectFrom">
+          <option value="">Select Country</option>
         </select>
       </div>
       <div class="dashboard-select">
         <label for="countrySelect">Send to:</label>
-
-        <select id="countrySelectTo" ng-model="selectedDestinationCountry">
-          <option value="" id="optionTo">Select Country</option>
-
+        <select id="countrySelectTo">
+          <option value="">Select Country</option>
         </select>
       </div>
     </div>
@@ -73,68 +67,42 @@
           <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
             <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
             <p>Bank Account</p>
-
           </div>
-          
-          <!-- <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
-            <p>Bank Account</p>
-          </div>
-
-          <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
-            <p>Bank Account</p>
-          </div> -->
         </div>
         <div class="heading2">
-          <img class="idea-icon" src="assets/idea.png" alt="Idea Icon" />
+          <img
+            class="money-icon"
+            src="assets/transfer.png"
+            alt="Transfer Icon"
+
+          />
+
           <p>
-            We do over 500,000 online money transactions globally every month.
+            Your money will credited to reciever's bank account hassle free!
           </p>
         </div>
-
       </div>
       <hr />
       <div>
-        <p class="heading">How would you like to pay?</p>
-        <div class="sender-card">
-          <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 1}" ng-click="setSelectedPaymentMethod(1, 'CardPayment')" >
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
-            <p>Card Payment</p>
-          </div>
-          <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 2}" ng-click="setSelectedPaymentMethod(2, 'BankTransfer')">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
-            <p>Bank Transfer</p>
-          </div>
-          <div class="card-content1" ng-class="{ 'clicked':  selectedCardId === 3 }"  ng-click="setSelectedPaymentMethod(3, 'UpiPayment')">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
-            <p>UPI Payment</p>
-
-          </div>
-
-        </div>
-        <button id="convert-button">Convert</button>
-        <p id="result"></p>
-        <hr />
-
-        <div>
-
-          <p class="heading">How does your receiver want the money?</p>
+          <p class="heading">How would you like to pay?</p>
           <div class="sender-card">
-            <div class="card-content" ng-class="{ 'clicked': bankClicked }" ng-click="toggleBankClicked()">
-              <img class="bank-icon" src="assets/bank.png" alt="bank-account" />
-              <p>Bank Account</p>
+            <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 1}" ng-click="setSelectedPaymentMethod(1, 'CardPayment')" >
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+              <p>Card Payment</p>
+            </div>
+            <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 2}" ng-click="setSelectedPaymentMethod(2, 'BankTransfer')">
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+              <p>Bank Transfer</p>
+            </div>
+            <div class="card-content1" ng-class="{ 'clicked':  selectedCardId === 3 }"  ng-click="setSelectedPaymentMethod(3, 'UpiPayment')">
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+              <p>UPI Payment</p>
             </div>
           </div>
-          <div class="heading2">
-            <img class="money-icon" src="assets/transfer.png" alt="Transfer Icon" />
-
-            <p>
-              Your money will credited to reciever's bank account hassle free!
-            </p>
-          </div>
+        <div class="heading2">
+          <img class="money-icon" src="assets/check-mark.png" alt="Checkmark Icon" ng-click="changeColor('money')" ng-class="{ 'clicked': isClicked('money') }" />
+          <p>You have chosen the best price option.</p>
         </div>
-
       </div>
       <hr />
       <button type="button" class="btn btn-primary btn-lg btn-block button-login" ng-click="openReminderModal()">Add Reminder for Payment</button>
@@ -149,45 +117,43 @@
       </button>
       </a>
     </form>
+  </div>
+</div>
+
+<div class="summary-cont">
+  <div style=" margin: 0 auto; padding: 15px; background: #F3FAFF; ">
+    <h3>Summary</h3>
+    <table class="table">
+
+      <tr>
+        <th>Exchange rate</th>
+        <td><p id="result2"></p></td>
+      </tr>
+
+      <tr>
+        <th>Fee</th>
+        <td>{{summary.commission}} {{summary.baseCurrencyCode}} </td>
+      </tr>
+
+      <tr>
+        <th>Transfer amount</th>
+        <td>{{summary.amount}} {{summary.baseCurrencyCode}} </td>
+      </tr>
+
+      <tr>
+        <th>Amount expected to receive</th>
+        <td>{{summary.receivedMoney}} {{summary.targetCurrencyCode}} </td>
+      </tr>
+
+      <tr>
+        <th>Service time</th>
+        <td> 0-4 Business days</td>
+      </tr>
+
+    </table>
 
   </div>
-
-  <div class="summary-cont">
-    <div style=" margin: 0 auto; padding: 15px; background: #F3FAFF; ">
-      <h3>Summary</h3>
-      <table class="table">
-
-        <tr>
-          <th>Exchange rate</th>
-          <td>
-            <p id="result2"></p>
-          </td>
-        </tr>
-
-        <tr>
-          <th>Fee</th>
-          <td>{{summary.commission}} {{summary.baseCurrencyCode}} </td>
-        </tr>
-
-        <tr>
-          <th>Transfer amount</th>
-          <td>{{summary.amount}} {{summary.baseCurrencyCode}} </td>
-        </tr>
-
-        <tr>
-          <th>Amount expected to receive</th>
-          <td>{{summary.receivedMoney}} {{summary.targetCurrencyCode}} </td>
-        </tr>
-
-        <tr>
-          <th>Service time</th>
-          <td> 0-4 Business days</td>
-        </tr>
-
-      </table>
-
-    </div>
-  </div>
+</div>
 </div>
 </div>
 <common-footer></common-footer>

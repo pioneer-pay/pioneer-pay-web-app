@@ -5,11 +5,9 @@ wuApp.controller("loginController", [
   "$timeout",
   "authService",
   "localStorageService",
-
   "profileService",
   "networkInfoService",
   function ($scope, $location, $http,$timeout, authService,localStorageService,profileService,networkInfoService) {
-
     $scope.loginUser = {
       emailId: "",
       password: "",
@@ -27,17 +25,13 @@ wuApp.controller("loginController", [
 
       console.log(JSON.stringify($scope.loginUser));
       $http
-        .post(BACKEND_URL+"/api/user/signin", $scope.loginUser)
+        .post("http://localhost:8081/api/user/signin", $scope.loginUser)
         .then(function (response) {
           console.log(response.data);
           $scope.responseMessage = response.data.message;
           $scope.status = response.data.status;
           $scope.userId = response.data.userId;
           authService.setUserID($scope.userId);
-          
-          authService.setEmailID($scope.loginUser.emailId);
-          console.log(authService.getEmailID());
-          
           localStorageService.saveUserID($scope.userId);
           $scope.userId = localStorageService.getUserID();
           $http

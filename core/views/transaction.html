@@ -1,31 +1,29 @@
 <dash-nav></dash-nav>
 
-<div class="form-cont">
-  <h3>Select Receiver From here</h3>
-  <div class="container panel">
+    <div class="form-cont">
+    <h3>Select Receiver From here</h3>
+<div class="container panel">
     <table class="table table-bordered">
-      <tr>
-        <th>Action</th>
-        <th>Receiver Name</th>
-        <th>Bank name</th>
-        <th>Account number</th>
-      </tr>
-      <tbody ng-repeat="t in allAccounts">
-        <td><button ng-click="onClick(t.accountId)" class="btn btn-blue">Select</button></td>
-        <td>{{t.accountHolderName}}</td>
-        <td>{{t.bankName}}</td>
-        <td>{{t.accountNo}}</td>
-      </tbody>
-    </table>
-    <a class="form-a" href="#!/receiver"><button class="btn btn-primary btn-lg btn-block button-login">Add new
-        Receiver</button></a>
-    <hr>
+        <tr>
+          <th>Action</th>
+            <th>Receiver Name</th>
+            <th>Bank name</th>
+            <th>Account number</th>
+        </tr>
+        <tbody ng-repeat="t in allAccounts">
+          <td><button ng-click="onClick(t.accountId)" class="btn btn-blue">Select</button></td>
+            <td>{{t.accountHolderName}}</td>
+            <td>{{t.bankName}}</td>
+            <td>{{t.accountNo}}</td>
+       </tbody>
+        </table>
+        <a class="form-a" href="#!/receiver"><button   class="btn btn-primary btn-lg btn-block button-login" >Add new Receiver</button></a>
+        <hr>
 
-    <button ng-click="onSubmit()" class="btn btn-primary btn-lg btn-block button-login">Review and Confirm
-      Transfer</button>
-    <div ng-if="$scope.loading">
-      Transaction initiated. Please wait for the successful completion of the transaction.
-    </div>
+        <button ng-click="onSubmit()"  class="btn btn-primary btn-lg btn-block button-login">Review and Confirm Transfer</button>
+        <div ng-if="$scope.loading">
+          Transaction initiated. Please wait for the successful completion of the transaction.
+        </div>
+        </div>
   </div>
-</div>
-<common-footer></common-footer>
+  <common-footer></common-footer>

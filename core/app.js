@@ -1,4 +1,4 @@
-let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap", "appConfig"]);
+let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap"]);
 
 wuApp.requires.push('InternetConnectivityService');
 
@@ -49,9 +49,9 @@ wuApp.config(function ($routeProvider) {
       controller: 'accountController',
     })
     .when('dashboard/reminderModalContent',{
-      templateUrl: 'views/reminderModalContent.html',
-      controller:'reminderModalController',
-    })
+         templateUrl: 'views/reminderModalContent.html',
+         controller:'reminderModalController',
+       })
     .when('/dashboard/history',{
       templateUrl:'views/history.html',
       controller:'historyController',
