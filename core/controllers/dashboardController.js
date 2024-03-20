@@ -10,7 +10,8 @@ wuApp.controller("dashboardController", [
   "accountService",
   "localStorageService",
   "networkInfoService",
-  function ($scope, $http,$uibModal, $location, $interval,$timeout, transactionService, authService, accountService,localStorageService,networkInfoService) {
+  "quickResendService",
+  function ($scope, $http,$uibModal, $location, $interval,$timeout, transactionService, authService, accountService,localStorageService,networkInfoService, quickResendService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -54,7 +55,8 @@ wuApp.controller("dashboardController", [
 
     $scope.cachedTransfer="";
     $scope.onClick = function () {
-      location.path("/transaction");
+     
+      $location.path("/transaction");
     };
     //check internet connection
     console.log("online connection check!");
@@ -208,8 +210,8 @@ wuApp.controller("dashboardController", [
         currencyCodeDisplayTo.textContent = selectedCountry.currency_code;
         currencyTo = selectedCountry.currency_code;
         console.log(currencyTo);
-        transactionService.setTargetCurrencyCode(currencyTo);
-        transactionService.getTargetCurrencyCode();
+        // transactionService.setTargetCurrencyCode(currencyTo);
+        // transactionService.getTargetCurrencyCode();
       } else {
         currencyCodeDisplayTo.textContent = "";
       }
