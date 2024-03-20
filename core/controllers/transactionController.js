@@ -49,7 +49,7 @@ wuApp.controller("transactionController",[
     $scope.onClick=function(accountid){
       transactionService.setReceiverAccountID(accountid);
       console.log(accountid);
-      // localStorage.setItem('cachedReceiver', JSON.stringify(response.data));
+      localStorage.setItem('cachedReceiver', accountid);
     };
 
     //go to the confirmation page

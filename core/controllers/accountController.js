@@ -5,7 +5,7 @@ wuApp.controller("accountController", [
     "authService",
     "localStorageService",
     "accountService",
-    function($scope,$http,$location,authService,localStorageService,accountService){
+    function($scope,$http,$location,authService,localStorageService,accountService,){
     $scope.account={
       accountHolderName:"",
         bankName:"",

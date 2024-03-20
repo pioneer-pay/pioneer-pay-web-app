@@ -1,9 +1,13 @@
 {"name":"Pioneer Pay Web App",
 "short_name":"Pioneer Pay",
-"icons":[{"src":"android-chrome-512x512.png","sizes":"512x512","type":"image/png","purpose": "any"}],
+"icons":[ 
+  {"src":"android-chrome-192x192.png","sizes":"192x192","type":"image/png","purpose": "any"},
+  {"src":"android-chrome-512x512.png","sizes":"512x512","type":"image/png","purpose": "any"}
+  ],
 "start_url": "../../core/index.html",
-"theme_color":"#fd0",
+"theme_color":"#317EFB",
 "background_color":"#ffffff",
+"orientation": "portrait",
 "display":"standalone",
 "splash_pages": [
     {

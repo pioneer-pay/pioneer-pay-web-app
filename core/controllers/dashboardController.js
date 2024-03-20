@@ -37,6 +37,7 @@ wuApp.controller("dashboardController", [
       ifscCode: "",
     };
     $scope.cachedTransfer="";
+    $scope.cachedSummary="";
     $scope.onClick = function () {};
     //check internet connection
     console.log("online connection check!");
@@ -44,13 +45,20 @@ wuApp.controller("dashboardController", [
     function updateOnlineStatus() {
     $scope.isOnline = networkInfoService.isOnline();
     const cachedTransfer = localStorage.getItem('cachedTransfer');
+    const cachedSummary = localStorage.getItem('cachedSummary');
         if (cachedTransfer) {
             $scope.cachedTransfer = JSON.parse(cachedTransfer);
         } else {
             //when there's no cached data available
             $scope.cachedTransfer = null;
         }
-    // console.log($scope.isOnline);
+
+        if(cachedSummary){
+          $scope.cachedSummary = JSON.parse(cachedSummary);
+        }else {
+          $scope.cachedSummary = null;
+        }
+
     }
     var intervalPromise = $interval(updateOnlineStatus, 3000);
     $scope.$on('$destroy', function() {
@@ -59,6 +67,9 @@ wuApp.controller("dashboardController", [
           intervalPromise = undefined;
       }});
     
+      $scope.hasContent = function() {
+        return $scope.cachedTransfer !== null;
+    };
     //pending transfer operations
     $scope.onCancelPending = function(){
       localStorage.removeItem('cachedTransfer');
