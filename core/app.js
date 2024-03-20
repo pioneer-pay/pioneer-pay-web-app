@@ -72,6 +72,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: "views/statuspage.html",
       controller: "statusController",
     })
+    .when("/verify", {
+      templateUrl: "views/verifymail.html",
+      controller: "verifyController",
+    })
     .otherwise({ redirectTo: '/' });
 });
 
