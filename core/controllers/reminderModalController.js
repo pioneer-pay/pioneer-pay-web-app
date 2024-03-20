@@ -8,8 +8,8 @@ wuApp.controller('reminderModalController', [
     function ($scope,$http,$uibModalInstance,reminderDetails,authService,dateTimePickerService) {
     // Pre-fill the form
      $scope.reminderDetails = reminderDetails;
-     var emailId = authService.getEmailID();
-     console.log(emailId);
+    var emailId = authService.getEmailID();
+    console.log(emailId);
 
 
     // Use the DateTimePickerService to get date options
