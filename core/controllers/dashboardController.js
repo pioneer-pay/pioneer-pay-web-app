@@ -4,12 +4,13 @@ wuApp.controller("dashboardController", [
   "$uibModal",
   "$location",
   "$interval",
+  "$timeout",
   "transactionService",
   "authService",
   "accountService",
   "localStorageService",
   "networkInfoService",
-  function ($scope, $http,$uibModal, $location, $interval, transactionService, authService, accountService,localStorageService,networkInfoService) {
+  function ($scope, $http,$uibModal, $location, $interval,$timeout, transactionService, authService, accountService,localStorageService,networkInfoService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -46,10 +47,15 @@ wuApp.controller("dashboardController", [
         console.log("Card clicked with ID:", cardId);
         $scope.selectedPaymentMethod = paymentMethod;
         console.log("Card clicked for payment option:", paymentMethod);
+        // location.path("/transaction");
       };
 
+    var sendMoneyQuery = $location.search();
+
     $scope.cachedTransfer="";
-    $scope.onClick = function () {};
+    $scope.onClick = function () {
+      location.path("/transaction");
+    };
     //check internet connection
     console.log("online connection check!");
     $scope.isOnline = networkInfoService.isOnline();
@@ -219,43 +225,99 @@ wuApp.controller("dashboardController", [
         currencyCodeDisplayFrom.textContent = selectedCountry.currency_code;
         currencyFrom = selectedCountry.currency_code;
         console.log(selectedCountry.currency_code);
-        transactionService.setBaseCurrencyCode(currencyFrom);
-        transactionService.getBaseCurrencyCode();
+        // transactionService.setBaseCurrencyCode(currencyFrom);
+        // transactionService.getBaseCurrencyCode();
       } else {
         currencyCodeDisplayFrom.textContent = "";
       }
     });
 
-    let convertCurrency = () => {
-      //Create References
-      const amount = document.querySelector("#amount").value;
+
+    angular.element(document).ready(function () {
+      console.log("page loaded", $location.search());
+      if ($location.search().isResendClicked) {
+        $scope.bankClicked = true;
+        $scope.toggleBankClicked = function () {
+          $scope.bankClicked = !$scope.bankClicked;
+          console.log("Bank clicked");
+        };
+ 
+        $scope.cardClicked = true;
+        $scope.toggleCardClicked = function () {
+          $scope.cardClicked = !$scope.cardClicked;
+          console.log("Card clicked");
+        };
+        convertCurrency();
+      }
+ 
+ 
+      //
+      //init();
+    });
+
+
+
+     //------------------------autofill data if resend clicked------------------------------//
+     let selectedCountryFrom = sendMoneyQuery.senderCountry;
+     let selectedCountryTo = sendMoneyQuery.receiverCountry;
+  
+     let countryFrom = countries.find(country => country.currency_code === selectedCountryFrom);
+     let countryTo = countries.find(country => country.currency_code === selectedCountryTo);
+  
+     if (countryFrom && selectedCountryFrom) {
+       document.getElementById("optionFrom").textContent = countryFrom.country;
+       document.getElementById("currencyCodeSend").textContent = countryFrom.currency_code;
+     }
+  
+     if (countryTo && selectedCountryTo) {
+       document.getElementById("optionTo").textContent = countryTo.country;
+       document.getElementById("currencyCodeReceive").textContent = countryTo.currency_code;
+     }
+     // let amountInput = document.querySelector("#amount");
+     // amountInput.dispatchEvent(new Event("input"));
+     let amount;
+     if (sendMoneyQuery.amount) {
+       document.getElementById("amount").value = sendMoneyQuery.amount;
+     }
+
+
+     let convertCurrency = () => {
+ 
+      console.log('convertCurrency() called');
+      let selectedCountryFrom = sendMoneyQuery.senderCountry || document.getElementById("currencyCodeSend").textContent;
+ 
+      let selectedCountryTo = sendMoneyQuery.receiverCountry || document.getElementById("currencyCodeReceive").textContent;
+ 
+      console.log(selectedCountryFrom + " " + selectedCountryTo);
+ 
+      var amount = sendMoneyQuery.amount || document.getElementById("amount").value
+      console.log(document.getElementById('amount').value);
+      const amountReceiveInput = document.querySelector("#amountReceive");
+      transactionService.setBaseCurrencyCode(selectedCountryFrom);
+      transactionService.setTargetCurrencyCode(selectedCountryTo);
       transactionService.setAmount(amount);
       console.log(transactionService.getAmount());
-      let amountReceive = document.querySelector("#amountReceive").value;
-
-      if (amount.length != 0) {
+ 
+      if (amount.length !== 0) {
         $http
           .get(
             "http://localhost:8083/api/transaction/summary/" +
-              currencyFrom +
-              "/" +
-              currencyTo +
-              "/" +
-              amount
+            selectedCountryFrom +
+            "/" +
+            selectedCountryTo +
+            "/" +
+            amount
           )
           .then(function (response) {
-            console.log(response.data);
             $scope.summary = response.data;
-            document.getElementById("amountReceive").value =
+            console.log("on line 226:" + $scope.summary);
+            amountReceiveInput.value =
               $scope.summary.amount * $scope.summary.rate;
-            result.innerHTML = `${1} ${currencyFrom} = ${$scope.summary.rate.toFixed(
-              4
-            )} ${currencyTo}`;
-            result2.innerHTML = `${1} ${currencyFrom} = ${$scope.summary.rate.toFixed(
-              4
-            )} ${currencyTo}`;
+ 
+            result.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
+            result2.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
+ 
             console.log($scope.summary);
-            localStorage.setItem('cachedSummary', JSON.stringify(response.data));
           })
           .catch(function (error) {
             console.log("Error:", error);
@@ -265,9 +327,26 @@ wuApp.controller("dashboardController", [
       }
     };
 
-    document
-      .querySelector("#convert-button")
-      .addEventListener("click", convertCurrency);
-    window.addEventListener("load", convertCurrency);
+
+    let amountInput = document.getElementById("amount");
+    console.log(typeof amountInput.value);
+    let timeoutId;
+ 
+    amountInput.addEventListener("input", function () {
+ 
+      clearTimeout(timeoutId);
+      var amount = sendMoneyQuery.amount || (amountInput.value.trim() !== "" ? amountInput.value : undefined);
+      if (amount !== undefined) {
+        timeoutId = $timeout(function () {
+          convertCurrency();
+        }, 3000);
+      }
+ 
+    });
+
+  //   document
+  //     .querySelector("#convert-button")
+  //     .addEventListener("click", convertCurrency);
+  //   window.addEventListener("load", convertCurrency);
   },
 ]);
