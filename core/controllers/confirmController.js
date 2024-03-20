@@ -73,17 +73,28 @@ wuApp.controller("confirmController", [
 
 
     //summary of transaction
+
     $http.get("http://localhost:8083/api/transaction/summary/" + source + "/" + target + "/" + amt)
       .then(function (response) {
         console.log(response.data);
         $scope.summary = response.data;
-        result.innerHTML = `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
-        result2.innerHTML = `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+        // result.innerHTML = `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+        // result2.innerHTML = `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
         console.log($scope.summary);
       })
-      .catch(function (error) {
-        console.log("Error:", error);
+      .catch(function(error){
+        console.log("Error:",error);
+        const cachedSummary = localStorage.getItem('cachedSummary');
+                      if (cachedSummary) {
+                          $scope.summary = JSON.parse(cachedSummary);
+                          // result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+                          // result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+                      } else {
+                          // Handle case when there's no cached data available
+                          $scope.summary = null;
+                      }
       });
+
 
 
     //receiver details

@@ -83,6 +83,7 @@ wuApp.controller("transactionController",[
     $scope.onClick=function(accountid){
       transactionService.setReceiverAccountID(accountid);
       console.log(accountid);
+      console.log("receiver click");
       // localStorage.setItem('cachedReceiver', JSON.stringify(response.data));
     };
 
