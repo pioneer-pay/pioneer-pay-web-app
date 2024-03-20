@@ -86,8 +86,8 @@ wuApp.controller("confirmController", [
     .then(function(response){
       console.log(response.data);
       $scope.summary=response.data;
-       result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
-      result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+      //  result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+      // result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
       console.log($scope.summary);
     })
     .catch(function(error){
@@ -95,8 +95,8 @@ wuApp.controller("confirmController", [
       const cachedSummary = localStorage.getItem('cachedSummary');
                     if (cachedSummary) {
                         $scope.summary = JSON.parse(cachedSummary);
-                        result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
-                        result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+                        // result.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
+                        // result2.innerHTML= `${1} ${source} = ${$scope.summary.rate.toFixed(4)} ${target}`;
                     } else {
                         // Handle case when there's no cached data available
                         $scope.summary = null;

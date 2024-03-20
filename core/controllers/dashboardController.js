@@ -47,14 +47,13 @@ wuApp.controller("dashboardController", [
         console.log("Card clicked with ID:", cardId);
         $scope.selectedPaymentMethod = paymentMethod;
         console.log("Card clicked for payment option:", paymentMethod);
-        // location.path("/transaction");
       };
 
     var sendMoneyQuery = $location.search();
 
     $scope.cachedTransfer="";
-    $scope.onClick = function () {
-      location.path("/transaction");
+    $scope.onSubmitClick = function () {
+      $location.path("/transaction");
     };
     //check internet connection
     console.log("online connection check!");
