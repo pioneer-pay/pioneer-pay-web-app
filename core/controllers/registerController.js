@@ -2,7 +2,8 @@ wuApp.controller("registerController", [
   "$scope",
   "$http",
   "$location",
-  function ($scope, $http,$location) {
+  "localStorageService",
+  function ($scope, $http, $location, localStorageService) {
     $scope.user = {
       emailId: "",
       password: "",
@@ -16,6 +17,9 @@ wuApp.controller("registerController", [
         .then(function (response) {
           console.log(response.data);
           if (response.data.status === true) {
+            $scope.userId = response.data.userId;
+            localStorageService.saveUserID($scope.userId);
+
             $scope.errorMessage = null;
             $scope.responseMessage = response.data.message;
             $scope.user = {
@@ -24,8 +28,9 @@ wuApp.controller("registerController", [
             };
             form.$setPristine();
             form.$setUntouched();
-            $location.path("/login")
-            Swal.fire("User Registered Successfully!!");
+            $location.path("/verify");
+            //$location.path("/login");
+            //Swal.fire("User Registered Successfully!!");
           }
         })
         .catch(function (error) {

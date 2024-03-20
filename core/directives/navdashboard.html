@@ -1,31 +1,35 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid nav-bg">
     <div class="navbar-header">
-      <img class="nav-logo" src="../assets/w.png" />
-      <a class="navbar-brand" style="color: white" href="#">Welcome!</a>
+
+      <img class="nav-logo" src="./assets/w.png" />
+      <a class="navbar-brand" style="color: white" href="#">Welcome, {{userName}}!</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li>
         <a href="#!/dashboard"  style="color: white">Send Money</a>
        </li>
+      
       <li>
         <a href="#!/dashboard/history"  style="color: white">History</a>
        </li>
+
        <li>
         <a href="#!/dashboard/profile"  style="color: white">
-          Profile
-        </a>
+          <span class="glyphicon glyphicon-user" style="color:white;"></span></a>
        </li>
-      <li>
+       <li>
         <a href="#!/dashboard/notification" style="color: white;">
           <span class="glyphicon glyphicon-bell"></span>
           <span class="badge badge-pill" style="background-color: red; color: white; ">{{ unreadCount }}</span>
         </a>
+        </li>
       <li class="login">
-        <a  ng-click="logout()" style="color: #ffdd00">
-          <span class="glyphicon glyphicon-log-out" style="color:white;"></span>
+        <a ng-click="logout()" id="logoutBtn" ng-class="{ 'disabled': !logoutAvailable }" ng-style="{ 'color': logoutAvailable ? '#ffdd00' : '#ccc' }">
+            <span class="glyphicon glyphicon-log-out" style="color:white;"></span>
         </a>
-      </li>
+    </li>
+
     </ul>
   </div>
 </nav>

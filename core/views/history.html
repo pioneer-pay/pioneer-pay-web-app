@@ -15,6 +15,7 @@
           <th scope="col">Commission</th>
           <th scope="col">Received amount</th>
           <th scope="col">Status</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody ng-repeat="t in transaction">
@@ -26,6 +27,10 @@
         <td>{{t.commission}} {{t.baseCurrencyCode}}</td>
         <td>{{t.transferedAmount}} {{t.targetCurrencyCode}}</td>
         <td>{{t.status}}</td>
+        <td>
+          <!-- Button for quick resend -->
+          <button ng-click="quickResend(t)" class="btn btn-primary quick-resend-btn">Resend</button>
+        </td>
       </tbody>
     </table>
   </div>
