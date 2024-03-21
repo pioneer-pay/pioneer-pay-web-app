@@ -37,6 +37,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/profile.html',
       controller: 'profileController',
     })
+    .when('/dashboard/notification',{
+      templateUrl:'views/notification.html',
+      controller: 'notificationController'
+    })
     .when('/dashboard/profile/addProfile',{
       templateUrl: 'views/addProfile.html',
       controller: 'addProfileController',
@@ -45,6 +49,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/account.html',
       controller: 'accountController',
     })
+    .when('dashboard/reminderModalContent',{
+         templateUrl: 'views/reminderModalContent.html',
+         controller:'reminderModalController',
+       })
     .when('/dashboard/history',{
       templateUrl:'views/history.html',
       controller:'historyController',
@@ -65,6 +73,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: "views/statuspage.html",
       controller: "statusController",
     })
+    .when("/verify", {
+      templateUrl: "views/verifymail.html",
+      controller: "verifyController",
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -76,6 +88,7 @@ wuApp.directive('basicNav', function () {
     replace: true,
   };
 });
+
 
 wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','networkInfoService', function (localStorageService,accountService,profileService,networkInfoService) {
   return {
@@ -101,6 +114,7 @@ wuApp.directive('dashNav', ['localStorageService', 'accountService','profileServ
     }
   };
 }]);
+
 
 wuApp.directive('commonFooter', function () {
   return {

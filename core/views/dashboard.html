@@ -5,7 +5,7 @@
   <div
     style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white;"
     class=" container"
-  > 
+  >
 
   <h2>Send Money Online</h2>
   <hr>
@@ -28,13 +28,13 @@
       <div class="dashboard-select">
         <label for="countrySelect">Send from:</label>
         <select id="countrySelectFrom">
-          <option value="">Select Country</option>
+          <option value="" id="optionFrom">Select Country</option>
         </select>
       </div>
       <div class="dashboard-select">
         <label for="countrySelect">Send to:</label>
         <select id="countrySelectTo">
-          <option value="">Select Country</option>
+          <option value="" id="optionTo">Select Country</option>
         </select>
       </div>
     </div>
@@ -87,28 +87,38 @@
       </div>
       <hr />
       <div>
-        <p class="heading">How would you like to pay?</p>
-        <div class="sender-card">
-          <div class="card-content1" ng-class="{ 'clicked': cardClicked }" ng-click="toggleCardClicked()">
-            <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
-            <p>Card Details</p>
+          <p class="heading">How would you like to pay?</p>
+          <div class="sender-card">
+            <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 1}" ng-click="setSelectedPaymentMethod(1, 'CardPayment')" >
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+              <p>Card Payment</p>
+            </div>
+            <div class="card-content1" ng-class="{ 'clicked': selectedCardId === 2}" ng-click="setSelectedPaymentMethod(2, 'BankTransfer')">
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+              <p>Bank Transfer</p>
+            </div>
+            <div class="card-content1" ng-class="{ 'clicked':  selectedCardId === 3 }"  ng-click="setSelectedPaymentMethod(3, 'UpiPayment')">
+              <img class="bank-icon" src="assets/bank.png" alt="bank-account"  />
+              <p>UPI Payment</p>
+            </div>
           </div>
-        </div>
         <div class="heading2">
           <img class="money-icon" src="assets/check-mark.png" alt="Checkmark Icon" ng-click="changeColor('money')" ng-class="{ 'clicked': isClicked('money') }" />
           <p>You have chosen the best price option.</p>
         </div>
       </div>
       <hr />
-      <a href="#!/transaction">
+      <button type="button" class="btn btn-primary btn-lg btn-block button-login" ng-click="openReminderModal()">Add Reminder for Payment</button>
+      <br>
+
       <button
         type="submit"
         class="btn btn-primary btn-lg btn-block button-login"
-        ng-click="onClick()"
+        ng-click="onSubmitClick()"
       >
         Continue
       </button>
-      </a>
+
     </form>
   </div>
 </div>

@@ -1,10 +1,12 @@
 wuApp.controller("historyController", [
   "$scope",
   "$http",
+  "$location",
   "authService",
   "localStorageService",
   "accountService",
-  function ($scope, $http, authService, localStorageService, accountService) {
+  "quickResendService",
+  function ($scope, $http,$location, authService, localStorageService, accountService,quickResendService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -57,5 +59,19 @@ wuApp.controller("historyController", [
           .catch(function (error) {
             console.log("Error:", error);
           });
+
+      //-----------------------------------quick resend------------------------//
+      $scope.quickResend = function (transactionDetail) {
+        console.log(transactionDetail);
+        $location.search({
+          amount: transactionDetail.amount,
+          senderCountry: transactionDetail.baseCurrencyCode,
+          receiverCountry: transactionDetail.targetCurrencyCode,
+          isResendClicked: true
+        })
+        transactionDetail.isResendClicked = true;
+        quickResendService.setSelectedTransaction(transactionDetail);
+        $location.path("/dashboard");
+      }
   },
 ]);

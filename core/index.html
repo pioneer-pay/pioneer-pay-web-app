@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="wuApp">
   <head>
+    <base href="" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -39,8 +40,11 @@
     <link rel="stylesheet" href="styles/profile.css" />
     <link rel="stylesheet" href="styles/userform.css" />
     <link rel="stylesheet" href="styles/statuspage.css" />
-
+    <link rel="stylesheet" href="styles/verifymail.css" />
+    <link rel="stylesheet" href="styles/notification.css">
+   
     
+
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-route.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-resource.min.js"></script>
@@ -62,13 +66,16 @@
     <script src="controllers/transactionController.js"></script>
     <script src="controllers/confirmController.js"></script>
     <script src="controllers/statusController.js"></script>
-    
-
+    <script src="controllers/verifyController.js"></script>
+    <script src="controllers/notificationController.js"></script>
+    <script src="controllers/reminderModalController.js"></script>
     <script src="service/authService.js"></script>
     <script src="service/accountService.js"></script>
     <script src="service/transactionService.js"></script>
     <script src="service/localStorageService.js"></script>
     <script src="service/profileService.js"></script>
+    <script src="service/dateTimePickerService.js"></script>
+    <script src="service/quickResendService.js"></script>
     <script src="service/internetConnectivityService.js"></script>
     <script src="service/networkInfoService.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -80,7 +87,6 @@
       <h2>Pioneer Pay</h2>
     </div>
     <p ng-show="showOnlineMessage" style="background-color: green; color: white;">You are online.</p>
-    <!-- <p ng-show="isOnline" style="background-color: green;">You are online.</p> -->
     <p ng-hide="isOnline" style="background-color: red;">You are offline.</p>
     <div ng-view></div>
     <script>
