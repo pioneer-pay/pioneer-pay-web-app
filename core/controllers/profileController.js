@@ -1,11 +1,12 @@
 wuApp.controller("profileController", [
     "$scope",
     "$http",
+    "$location",
     "authService",
     "accountService",
     "networkInfoService",
     "localStorageService",
-    function($scope,$http,authService,accountService,networkInfoService,localStorageService){
+    function($scope,$http,$location,authService,accountService,networkInfoService,localStorageService){
       $scope.user = {
         firstName: '',
         lastName: '',
@@ -34,6 +35,20 @@ wuApp.controller("profileController", [
       // Update other buttons on the profile page based on online status if needed
       // console.log("profile");
     });
+
+    $scope.navigateToUpdateProfile = function () {
+      // Navigate to the profile update page only if online
+      if ($scope.isOnline) {
+          $location.path('/dashboard/profile/addProfile');
+      }
+    };
+
+    $scope.navigateToUpdateAccount = function () {
+      // Navigate to the account update page only if online
+      if ($scope.isOnline) {
+          $location.path('/dashboard/profile/account');
+      }
+    };
 
     //show profile details
     var id= authService.getUserID();
