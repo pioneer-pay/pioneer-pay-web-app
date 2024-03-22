@@ -5,11 +5,12 @@ wuApp.requires.push('InternetConnectivityService');
 wuApp.run(function($rootScope, $timeout) {
   // Show splash screen initially
   $rootScope.showSplash = true;
-
-  // Hide splash screen after 3 seconds
-  $timeout(function() {
+  // Hide splash screen when the window has fully loaded
+  window.addEventListener("load", function() {
+    $rootScope.$apply(function() {
       $rootScope.showSplash = false;
-  }, 3000);
+    }.bind(this));
+  });  
 });
 //ROUTING
 wuApp.config(function ($routeProvider) {
@@ -103,25 +104,13 @@ wuApp.directive('dashNav', ['localStorageService', 'accountService','profileServ
       };
       $scope.userName = profileService.getUserName();
       $scope.isOnline = networkInfoService.isOnline();
-      // $scope.logoutAvailable = false;
       $scope.logoutAvailable = $scope.isOnline;
 
-      // if ($scope.isOnline) {
-      //   document.getElementById("logoutButton").removeAttribute("disabled");
-      //   $scope.logoutAvailable = true;
-      // }
-      
-
+      //listen to changes in online status
       $rootScope.$on('internetStatusChanged', function (event, isOnline) {
         $scope.isOnline = isOnline;
         $scope.logoutAvailable = isOnline;
-        // if (isOnline) {
-        //   document.getElementById("logoutButton").removeAttribute("disabled");
-        // } else {
-        //   document.getElementById("logoutButton").setAttribute("disabled", "disabled");
-        // }
-      });
-      
+      }); 
     }
   };
 }]);

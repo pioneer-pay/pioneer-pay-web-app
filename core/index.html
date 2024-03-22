@@ -23,7 +23,7 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fd0"/>
+    <!-- <meta name="theme-color" content="#317EFB"/> -->
     <title>Western Union</title>
 
     <link
@@ -51,6 +51,7 @@
     <script src="https://code.angularjs.org/1.8.2/angular-animate.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-touch.min.js"></script>
     <script src="assets/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.6/runtime.min.js"></script>
     <script src="scripts/network-information-api-polyfill.js"></script>
     <script src="app.js"></script>
     <script src="controllers/loginController.js"></script>
@@ -80,7 +81,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    <p ng-show="isOnline">You are online.</p>
+    
+    <div class="bg-loader" ng-show="showSplash">
+      <img id="splash" src="assets/splash-w.png" style=" width: 50px; height: 50px; border-radius: 10px">
+      <h2>Pioneer Pay</h2>
+    </div>
+    <p ng-show="showOnlineMessage" style="background-color: green; color: white;">You are online.</p>
     <p ng-hide="isOnline" style="background-color: red;">You are offline.</p>
     <div ng-view></div>
     <script>

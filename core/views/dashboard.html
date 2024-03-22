@@ -9,16 +9,19 @@
 
   <h2>Send Money Online</h2>
   <hr>
+  <div class="transfer-border" ng-if="hasContent()">
   <p ng-show="isOnline && cachedTransfer">Pending Transfer:
-    <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
-    <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
-    <br><button type="submit" ng-click="onContinuePending()">Continue</button>
-        <button type="submit" ng-click="onCancelPending()">Cancel</button>
+    <br>Sender Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
+    <br>Receiver Amount: {{cachedSummary.receivedMoney}} {{ cachedTransfer.targetCurrencyCode }}
+    <br><button class="btn btn-primary" type="submit" ng-click="onContinuePending()">Continue</button> 
+        <button class="btn btn-secondary" type="submit" ng-click="onCancelPending()">Cancel</button>
   </p>
+  
   <p ng-show="!isOnline && cachedTransfer" >Pending Transfer:
     <br>Amount: {{ cachedTransfer.amount }} {{ cachedTransfer.baseCurrencyCode }}
     <br>Receiver currency: {{ cachedTransfer.targetCurrencyCode }}
   </p>
+</div>
 <form name="dashboard" class="sender-form">
     <div class="heading">Select the country and send amount!</div>
     <div class="dashboard-dropdown">

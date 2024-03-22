@@ -39,7 +39,8 @@ wuApp.controller("dashboardController", [
       balance: "",
       ifscCode: "",
     };
-
+    $scope.cachedTransfer="";
+    $scope.cachedSummary="";
     $scope.onClick = function () {};
         $scope.selectedCardId = null;
 
@@ -64,13 +65,20 @@ wuApp.controller("dashboardController", [
     function updateOnlineStatus() {
     $scope.isOnline = networkInfoService.isOnline();
     const cachedTransfer = localStorage.getItem('cachedTransfer');
+    const cachedSummary = localStorage.getItem('cachedSummary');
         if (cachedTransfer) {
             $scope.cachedTransfer = JSON.parse(cachedTransfer);
         } else {
             //when there's no cached data available
             $scope.cachedTransfer = null;
         }
-    // console.log($scope.isOnline);
+
+        if(cachedSummary){
+          $scope.cachedSummary = JSON.parse(cachedSummary);
+        }else {
+          $scope.cachedSummary = null;
+        }
+
     }
     var intervalPromise = $interval(updateOnlineStatus, 3000);
     $scope.$on('$destroy', function() {
@@ -79,6 +87,9 @@ wuApp.controller("dashboardController", [
           intervalPromise = undefined;
       }});
     
+      $scope.hasContent = function() {
+        return $scope.cachedTransfer !== null;
+    };
     //pending transfer operations
     $scope.onCancelPending = function(){
       localStorage.removeItem('cachedTransfer');
@@ -320,6 +331,7 @@ wuApp.controller("dashboardController", [
             result2.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
  
             console.log($scope.summary);
+            localStorage.setItem('cachedSummary', JSON.stringify(response.data));
           })
           .catch(function (error) {
             console.log("Error:", error);
