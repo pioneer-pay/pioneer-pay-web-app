@@ -11,7 +11,7 @@ wuApp.controller("dashboardController", [
   "localStorageService",
   "networkInfoService",
   "quickResendService",
-  function ($scope, $http,$uibModal, $location, $interval,$timeout, transactionService, authService, accountService,localStorageService,networkInfoService, quickResendService) {
+  function ($scope, $http, $uibModal, $location, $interval, $timeout, transactionService, authService, accountService, localStorageService, networkInfoService, quickResendService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -26,6 +26,8 @@ wuApp.controller("dashboardController", [
     };
     $scope.summary = {
       amount: "",
+      transferAmount: "",
+      totalAmount: "",
       commission: "",
       receivedMoney: "",
       rate: "",
@@ -39,20 +41,22 @@ wuApp.controller("dashboardController", [
       balance: "",
       ifscCode: "",
     };
+    $scope.showErrorMessage = false;
 
-    $scope.onClick = function () {};
-        $scope.selectedCardId = null;
 
-        $scope.setSelectedPaymentMethod = function (cardId,paymentMethod) {
-        $scope.selectedCardId = $scope.selectedCardId === cardId ? null : cardId;
-        console.log("Card clicked with ID:", cardId);
-        $scope.selectedPaymentMethod = paymentMethod;
-        console.log("Card clicked for payment option:", paymentMethod);
-      };
+    $scope.onClick = function () { };
+    $scope.selectedCardId = null;
+
+    $scope.setSelectedPaymentMethod = function (cardId, paymentMethod) {
+      $scope.selectedCardId = $scope.selectedCardId === cardId ? null : cardId;
+      console.log("Card clicked with ID:", cardId);
+      $scope.selectedPaymentMethod = paymentMethod;
+      console.log("Card clicked for payment option:", paymentMethod);
+    };
 
     var sendMoneyQuery = $location.search();
 
-    $scope.cachedTransfer="";
+    $scope.cachedTransfer = "";
 
     $scope.onSubmitClick = function () {
 
@@ -62,70 +66,71 @@ wuApp.controller("dashboardController", [
     console.log("online connection check!");
     $scope.isOnline = networkInfoService.isOnline();
     function updateOnlineStatus() {
-    $scope.isOnline = networkInfoService.isOnline();
-    const cachedTransfer = localStorage.getItem('cachedTransfer');
-        if (cachedTransfer) {
-            $scope.cachedTransfer = JSON.parse(cachedTransfer);
-        } else {
-            //when there's no cached data available
-            $scope.cachedTransfer = null;
-        }
-    // console.log($scope.isOnline);
+      $scope.isOnline = networkInfoService.isOnline();
+      const cachedTransfer = localStorage.getItem('cachedTransfer');
+      if (cachedTransfer) {
+        $scope.cachedTransfer = JSON.parse(cachedTransfer);
+      } else {
+        //when there's no cached data available
+        $scope.cachedTransfer = null;
+      }
+      // console.log($scope.isOnline);
     }
     var intervalPromise = $interval(updateOnlineStatus, 3000);
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       if (angular.isDefined(intervalPromise)) {
-          $interval.cancel(intervalPromise);
-          intervalPromise = undefined;
-      }});
-    
+        $interval.cancel(intervalPromise);
+        intervalPromise = undefined;
+      }
+    });
+
     //pending transfer operations
-    $scope.onCancelPending = function(){
+    $scope.onCancelPending = function () {
       localStorage.removeItem('cachedTransfer');
       console.log("canceld pending transfer");
     };
-    
-    $scope.onContinuePending = function(){
-    console.log("offline transfer is being initiated");
-    $http.post("http://localhost:8083/api/transaction/initiate",$scope.cachedTransfer)
-            .then(function(response){
-              $scope.responseMessage = response.data.message;
-              console.log(response.data);
-              localStorage.removeItem('cachedTransfer');
-              $location.path("/status");
-              $scope.loading = false;
-            })
-            .catch(function(error){
-              console.log("Error:",error);
-            });
+
+    $scope.onContinuePending = function () {
+      console.log("offline transfer is being initiated");
+      $http.post("http://localhost:8083/api/transaction/initiate", $scope.cachedTransfer)
+        .then(function (response) {
+          $scope.responseMessage = response.data.message;
+          console.log(response.data);
+          localStorage.removeItem('cachedTransfer');
+          $location.path("/status");
+          $scope.loading = false;
+        })
+        .catch(function (error) {
+          console.log("Error:", error);
+        });
     };
 
     //add reminder
-    $scope.openReminderModal = function() {
+    $scope.openReminderModal = function () {
       var modalInstance = $uibModal.open({
-          templateUrl: 'views/reminderModalContent.html',
-          controller: 'reminderModalController',
-          resolve: {
-            reminderDetails: function () {
-              return {
-                amount: document.getElementById("amount").value,
-                sourceCountry: document.getElementById("countrySelectFrom").options[document.getElementById("countrySelectFrom").selectedIndex].text,
-                destinationCountry: document.getElementById("countrySelectTo").options[document.getElementById("countrySelectTo").selectedIndex].text,
-                paymentMethod: $scope.selectedPaymentMethod,
-                reminderDate: new Date(), // Initialize with current date
-                reminderTime: new Date() // Initialize with current time
+        templateUrl: 'views/reminderModalContent.html',
+        controller: 'reminderModalController',
+        resolve: {
+          reminderDetails: function () {
+            return {
+              amount: document.getElementById("amount").value,
+              sourceCountry: document.getElementById("countrySelectFrom").options[document.getElementById("countrySelectFrom").selectedIndex].text,
+              destinationCountry: document.getElementById("countrySelectTo").options[document.getElementById("countrySelectTo").selectedIndex].text,
+              paymentMethod: $scope.selectedPaymentMethod,
+              reminderDate: new Date(), // Initialize with current date
+              reminderTime: new Date() // Initialize with current time
 
-              };
+            };
 
-            }
           }
+        }
       });
       modalInstance.result.then(function (selectedItem) {
-          $scope.selected = selectedItem;
+        $scope.selected = selectedItem;
       }, function () {
-          console.log('Modal dismissed at: ' + new Date());
+        console.log('Modal dismissed at: ' + new Date());
       });
-  };
+    };
 
     $scope.bankClicked = false;
     $scope.toggleBankClicked = function () {
@@ -133,11 +138,11 @@ wuApp.controller("dashboardController", [
       console.log("Bank clicked");
     };
 
-//    $scope.cardClicked = false;
-//    $scope.toggleCardClicked = function () {
-//      $scope.cardClicked = !$scope.cardClicked;
-//      console.log("Card clicked");
-//    };
+    //    $scope.cardClicked = false;
+    //    $scope.toggleCardClicked = function () {
+    //      $scope.cardClicked = !$scope.cardClicked;
+    //      console.log("Card clicked");
+    //    };
 
     //get sender account details to continue transaction
     let id = localStorageService.getUserID();
@@ -152,28 +157,28 @@ wuApp.controller("dashboardController", [
         console.log(accountService.getAccountID());
         console.log($scope.account);
       });
-    
+
     //store receiver list
-    let accountid= accountService.getAccountID();
+    let accountid = accountService.getAccountID();
     $http.get("http://localhost:8082/api/account/get/" + accountid)
-    .then(function(response) {
+      .then(function (response) {
         console.log(response.data);
         $scope.allAccounts = response.data;
         console.log(response.data);
         // Cache the data
         localStorage.setItem('cachedAccounts', JSON.stringify(response.data));
-    })
-    .catch(function(error) {
+      })
+      .catch(function (error) {
         console.log("Error:", error);
         // Attempt to retrieve data from cache
         const cachedAccounts = localStorage.getItem('cachedAccounts');
         if (cachedAccounts) {
-            $scope.allAccounts = JSON.parse(cachedAccounts);
+          $scope.allAccounts = JSON.parse(cachedAccounts);
         } else {
-            // Handle case when there's no cached data available
-            $scope.allAccounts = null;
+          // Handle case when there's no cached data available
+          $scope.allAccounts = null;
         }
-    });
+      });
 
 
     let currencyFrom = "";
@@ -243,7 +248,7 @@ wuApp.controller("dashboardController", [
           $scope.bankClicked = !$scope.bankClicked;
           console.log("Bank clicked");
         };
- 
+
         $scope.cardClicked = true;
         $scope.toggleCardClicked = function () {
           $scope.cardClicked = !$scope.cardClicked;
@@ -251,47 +256,45 @@ wuApp.controller("dashboardController", [
         };
         convertCurrency();
       }
- 
- 
+
+
       //
       //init();
     });
 
 
 
-     //------------------------autofill data if resend clicked------------------------------//
-     let selectedCountryFrom = sendMoneyQuery.senderCountry;
-     let selectedCountryTo = sendMoneyQuery.receiverCountry;
-  
-     let countryFrom = countries.find(country => country.currency_code === selectedCountryFrom);
-     let countryTo = countries.find(country => country.currency_code === selectedCountryTo);
-  
-     if (countryFrom && selectedCountryFrom) {
-       document.getElementById("optionFrom").textContent = countryFrom.country;
-       document.getElementById("currencyCodeSend").textContent = countryFrom.currency_code;
-     }
-  
-     if (countryTo && selectedCountryTo) {
-       document.getElementById("optionTo").textContent = countryTo.country;
-       document.getElementById("currencyCodeReceive").textContent = countryTo.currency_code;
-     }
-     // let amountInput = document.querySelector("#amount");
-     // amountInput.dispatchEvent(new Event("input"));
-     let amount;
-     if (sendMoneyQuery.amount) {
-       document.getElementById("amount").value = sendMoneyQuery.amount;
-     }
+    //------------------------autofill data if resend clicked------------------------------//
+    let selectedCountryFrom = sendMoneyQuery.senderCountry;
+    let selectedCountryTo = sendMoneyQuery.receiverCountry;
+
+    let countryFrom = countries.find(country => country.currency_code === selectedCountryFrom);
+    let countryTo = countries.find(country => country.currency_code === selectedCountryTo);
+
+    if (countryFrom && selectedCountryFrom) {
+      document.getElementById("optionFrom").textContent = countryFrom.country;
+      document.getElementById("currencyCodeSend").textContent = countryFrom.currency_code;
+    }
+
+    if (countryTo && selectedCountryTo) {
+      document.getElementById("optionTo").textContent = countryTo.country;
+      document.getElementById("currencyCodeReceive").textContent = countryTo.currency_code;
+    }
+    // let amountInput = document.querySelector("#amount");
+    // amountInput.dispatchEvent(new Event("input"));
+    let amount;
+    $scope.sendAmount = $location.search().amount || "";
 
 
-     let convertCurrency = () => {
- 
+    let convertCurrency = () => {
+
       console.log('convertCurrency() called');
       let selectedCountryFrom = sendMoneyQuery.senderCountry || document.getElementById("currencyCodeSend").textContent;
- 
+
       let selectedCountryTo = sendMoneyQuery.receiverCountry || document.getElementById("currencyCodeReceive").textContent;
- 
+
       console.log(selectedCountryFrom + " " + selectedCountryTo);
- 
+
       var amount = sendMoneyQuery.amount || document.getElementById("amount").value
       console.log(document.getElementById('amount').value);
       const amountReceiveInput = document.querySelector("#amountReceive");
@@ -299,7 +302,7 @@ wuApp.controller("dashboardController", [
       transactionService.setTargetCurrencyCode(selectedCountryTo);
       transactionService.setAmount(amount);
       console.log(transactionService.getAmount());
- 
+
       if (amount.length !== 0) {
         $http
           .get(
@@ -313,12 +316,13 @@ wuApp.controller("dashboardController", [
           .then(function (response) {
             $scope.summary = response.data;
             console.log("on line 226:" + $scope.summary);
-            amountReceiveInput.value =
-              $scope.summary.amount * $scope.summary.rate;
- 
+            amountReceiveInput.value = $scope.summary.amount * $scope.summary.rate;
+            $scope.summary.totalAmount = $scope.summary.amount;
+            $scope.summary.transferAmount = $scope.summary.amount - $scope.summary.commission;
+
             result.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
             result2.innerHTML = `${1} ${selectedCountryFrom} = ${$scope.summary.rate.toFixed(4)} ${selectedCountryTo}`;
- 
+
             console.log($scope.summary);
           })
           .catch(function (error) {
@@ -333,22 +337,25 @@ wuApp.controller("dashboardController", [
     let amountInput = document.getElementById("amount");
     console.log(typeof amountInput.value);
     let timeoutId;
- 
+
     amountInput.addEventListener("input", function () {
- 
+
       clearTimeout(timeoutId);
-      var amount = sendMoneyQuery.amount || (amountInput.value.trim() !== "" ? amountInput.value : undefined);
-      if (amount !== undefined) {
+      if ($scope.sendAmount === undefined || $scope.sendAmount === null || isNaN($scope.sendAmount) || $scope.sendAmount <= 0) {
+        $scope.showErrorMessage = true;
+        $scope.errorMessage = "Please enter a valid positive numerical value.";
+      } else {
         timeoutId = $timeout(function () {
           convertCurrency();
         }, 3000);
       }
- 
+      
+
     });
 
-  //   document
-  //     .querySelector("#convert-button")
-  //     .addEventListener("click", convertCurrency);
-  //   window.addEventListener("load", convertCurrency);
+    //   document
+    //     .querySelector("#convert-button")
+    //     .addEventListener("click", convertCurrency);
+    //   window.addEventListener("load", convertCurrency);
   },
 ]);

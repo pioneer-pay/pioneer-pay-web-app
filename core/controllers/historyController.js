@@ -63,8 +63,9 @@ wuApp.controller("historyController", [
       //-----------------------------------quick resend------------------------//
       $scope.quickResend = function (transactionDetail) {
         console.log(transactionDetail);
+        var newAmount = transactionDetail.amount - transactionDetail.commission;
         $location.search({
-          amount: transactionDetail.amount,
+          amount: newAmount,
           senderCountry: transactionDetail.baseCurrencyCode,
           receiverCountry: transactionDetail.targetCurrencyCode,
           isResendClicked: true
