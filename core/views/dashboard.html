@@ -44,7 +44,7 @@
   <div class="heading3">
     <div class="input-half-width">
       <label for="amount">Send Amount</label>
-      <input type="text" class="input-lg" id="amount" />
+      <input type="text" class="input-lg" id="amount" ng-model="sendAmount" ng-change="validateAmount()" ng-model-options="{ updateOn: 'default blur' }"/>
       <p>Currency: <span id="currencyCodeSend"></span></p>
     </div>
 
@@ -56,8 +56,8 @@
     </div>
 
   </div>
-  <button id="convert-button">Convert</button>
-    <p id="result"></p>
+  <!-- <button id="convert-button">Convert</button> -->
+    <p id="result" ng-show="showErrorMessage">{{ errorMessage }}</p>
   <hr />
 
       <div>
@@ -134,10 +134,14 @@
         <th>Fee</th>
         <td>{{summary.commission}} {{summary.baseCurrencyCode}} </td>
       </tr>
-
       <tr>
         <th>Transfer amount</th>
-        <td>{{summary.amount}} {{summary.baseCurrencyCode}} </td>
+        <td>{{summary.transferAmount}} {{summary.baseCurrencyCode}} </td>
+      </tr>
+
+      <tr>
+        <th>Total amount</th>
+        <td>{{summary.totalAmount}} {{summary.baseCurrencyCode}} </td>
       </tr>
 
       <tr>
