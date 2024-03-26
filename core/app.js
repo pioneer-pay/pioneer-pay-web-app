@@ -90,7 +90,7 @@ wuApp.directive('basicNav', function () {
 });
 
 
-wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','networkInfoService', function (localStorageService,accountService,profileService,networkInfoService) {
+wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','networkInfoService','notificationService', function (localStorageService,accountService,profileService,networkInfoService,notificationService) {
   return {
     templateUrl: 'directives/navdashboard.html',
     replace: true,
@@ -110,7 +110,15 @@ wuApp.directive('dashNav', ['localStorageService', 'accountService','profileServ
       $rootScope.$on('internetStatusChanged', function (event, isOnline) {
         $scope.isOnline = isOnline;
         $scope.logoutAvailable = isOnline;
-      }); 
+      });
+
+      
+      // Get unread notification count
+      var userId = localStorageService.getUserID();
+      notificationService.getUnreadCount(userId)
+          .then(function(unreadCount) {
+              $scope.unreadCount = unreadCount;
+          });
     }
   };
 }]);
