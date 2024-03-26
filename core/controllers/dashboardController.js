@@ -257,9 +257,6 @@ wuApp.controller("dashboardController", [
         convertCurrency();
       }
 
-
-      //
-      //init();
     });
 
 
@@ -288,7 +285,7 @@ wuApp.controller("dashboardController", [
 
     let convertCurrency = () => {
 
-      console.log('convertCurrency() called');
+      
       let selectedCountryFrom = sendMoneyQuery.senderCountry || document.getElementById("currencyCodeSend").textContent;
 
       let selectedCountryTo = sendMoneyQuery.receiverCountry || document.getElementById("currencyCodeReceive").textContent;
@@ -302,8 +299,21 @@ wuApp.controller("dashboardController", [
       transactionService.setTargetCurrencyCode(selectedCountryTo);
       transactionService.setAmount(amount);
       console.log(transactionService.getAmount());
+      if ($scope.sendAmount === undefined || $scope.sendAmount === null || isNaN($scope.sendAmount) || $scope.sendAmount <= 0) {
+        // If input is invalid, show an error message and exit the function
+        $scope.showErrorMessage = true;
+        $scope.errorMessage = "Please enter a valid positive numerical value.";
+        amountReceiveInput.value = " ";
+        $scope.summary = "";
+        
+        return; // Exit the function
+      }
 
-      if (amount.length !== 0) {
+      if ($scope.sendAmount !== undefined
+        || $scope.sendAmount !== null
+        || !isNaN($scope.sendAmount)
+        || $scope.sendAmount > 0) {
+        $scope.showErrorMessage = false;
         $http
           .get(
             "http://localhost:8083/api/transaction/summary/" +
@@ -329,7 +339,8 @@ wuApp.controller("dashboardController", [
             console.log("Error:", error);
           });
       } else {
-        alert("Please fill in the amount");
+        $scope.showErrorMessage = true;
+        $scope.errorMessage = "Please enter a valid positive numerical value.";
       }
     };
 
@@ -343,15 +354,17 @@ wuApp.controller("dashboardController", [
       clearTimeout(timeoutId);
       if ($scope.sendAmount === undefined || $scope.sendAmount === null || isNaN($scope.sendAmount) || $scope.sendAmount <= 0) {
         $scope.showErrorMessage = true;
-        $scope.errorMessage = "Please enter a valid positive numerical value.";
+        $scope.errorMessage = "Please enter a valid number";
       } else {
         timeoutId = $timeout(function () {
+          $scope.showErrorMessage = false;
           convertCurrency();
         }, 3000);
       }
-      
+
 
     });
+
 
     //   document
     //     .querySelector("#convert-button")
