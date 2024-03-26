@@ -57,7 +57,7 @@
             </tr>
           </tbody>
       </table>
-      <a href="#!/dashboard/profile/addProfile" role="button" class="btn btn-default profile-btn">Update</a>
+      <a ng-click="navigateToUpdateProfile()" role="button" class="btn btn-default profile-btn" ng-disabled="!isOnline">Update</a>
     </div>
     </div>
     <div class="container prof-cont">
@@ -89,7 +89,7 @@
             </tr>
           </tbody>
         </table>
-        <a href="#!/dashboard/profile/account" class="btn btn-default profile-btn">Update</a>
+        <a ng-click="navigateToUpdateAccount()" class="btn btn-default profile-btn" ng-disabled="!isOnline">Update</a>
       </div>
   </div>
 </div>

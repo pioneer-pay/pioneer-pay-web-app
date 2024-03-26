@@ -5,7 +5,9 @@ wuApp.controller("accountController", [
     "authService",
     "localStorageService",
     "accountService",
+    
     function($scope,$http,$location,authService,localStorageService,accountService){
+
     $scope.account={
       accountHolderName:"",
         bankName:"",
@@ -22,6 +24,7 @@ wuApp.controller("accountController", [
     //show account details
     var id=localStorageService.getUserID();
     $http.get("http://localhost:8081/api/user/account/"+id)
+
             .then(function(response){
                 console.log(response.data);
                 $scope.account=response.data[0];

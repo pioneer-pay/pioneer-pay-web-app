@@ -1,6 +1,17 @@
 let wuApp = angular.module("wuApp", ["ngRoute", "ui.bootstrap"]);
 
 wuApp.requires.push('InternetConnectivityService');
+
+wuApp.run(function($rootScope, $timeout) {
+  // Show splash screen initially
+  $rootScope.showSplash = true;
+  // Hide splash screen when the window has fully loaded
+  window.addEventListener("load", function() {
+    $rootScope.$apply(function() {
+      $rootScope.showSplash = false;
+    }.bind(this));
+  });  
+});
 //ROUTING
 wuApp.config(function ($routeProvider) {
   $routeProvider
@@ -26,6 +37,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/profile.html',
       controller: 'profileController',
     })
+    .when('/dashboard/notification',{
+      templateUrl:'views/notification.html',
+      controller: 'notificationController'
+    })
     .when('/dashboard/profile/addProfile',{
       templateUrl: 'views/addProfile.html',
       controller: 'addProfileController',
@@ -34,6 +49,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: 'views/account.html',
       controller: 'accountController',
     })
+    .when('dashboard/reminderModalContent',{
+         templateUrl: 'views/reminderModalContent.html',
+         controller:'reminderModalController',
+       })
     .when('/dashboard/history',{
       templateUrl:'views/history.html',
       controller:'historyController',
@@ -54,6 +73,10 @@ wuApp.config(function ($routeProvider) {
       templateUrl: "views/statuspage.html",
       controller: "statusController",
     })
+    .when("/verify", {
+      templateUrl: "views/verifymail.html",
+      controller: "verifyController",
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -65,6 +88,7 @@ wuApp.directive('basicNav', function () {
     replace: true,
   };
 });
+
 
 wuApp.directive('dashNav', ['localStorageService', 'accountService','profileService','networkInfoService', function (localStorageService,accountService,profileService,networkInfoService) {
   return {
@@ -80,28 +104,17 @@ wuApp.directive('dashNav', ['localStorageService', 'accountService','profileServ
       };
       $scope.userName = profileService.getUserName();
       $scope.isOnline = networkInfoService.isOnline();
-      // $scope.logoutAvailable = false;
       $scope.logoutAvailable = $scope.isOnline;
 
-      // if ($scope.isOnline) {
-      //   document.getElementById("logoutButton").removeAttribute("disabled");
-      //   $scope.logoutAvailable = true;
-      // }
-      
-
+      //listen to changes in online status
       $rootScope.$on('internetStatusChanged', function (event, isOnline) {
         $scope.isOnline = isOnline;
         $scope.logoutAvailable = isOnline;
-        // if (isOnline) {
-        //   document.getElementById("logoutButton").removeAttribute("disabled");
-        // } else {
-        //   document.getElementById("logoutButton").setAttribute("disabled", "disabled");
-        // }
-      });
-      
+      }); 
     }
   };
 }]);
+
 
 wuApp.directive('commonFooter', function () {
   return {

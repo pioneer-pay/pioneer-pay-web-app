@@ -32,6 +32,10 @@ wuApp.controller("loginController", [
           $scope.status = response.data.status;
           $scope.userId = response.data.userId;
           authService.setUserID($scope.userId);
+
+          authService.setEmailID($scope.loginUser.emailId);
+          console.log(authService.getEmailID());
+          
           localStorageService.saveUserID($scope.userId);
           $scope.userId = localStorageService.getUserID();
           $http

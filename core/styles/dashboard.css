@@ -199,6 +199,27 @@ hr {
   filter: brightness(0) invert(1);
 }
 
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items:center ;
+  padding: 2rem;
+  text-align: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.sender-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+}
+
 .button-dash {
   padding: 10px;
   background-color: #4caf50;
@@ -211,6 +232,20 @@ hr {
 .button-dash:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.transfer-border{
+  border: 1px solid black;
+  border-radius: 10px;
+  display: inline-block; /* Ensures the box expands or shrinks based on content */
+  padding: 15px 25px 15px 20px; /* Optional: Add some padding for better appearance */
+  min-width: 50px; /* Minimum width for the box */
+  min-height: 50px; /* Minimum height for the box */
+  visibility: visible;
+}
+
+.transfer-border:empty {
+  visibility: hidden; /* Hide the box when it's empty */
 }
 
 @media (max-width: 768px) {
