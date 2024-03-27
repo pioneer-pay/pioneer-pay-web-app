@@ -1,10 +1,12 @@
 wuApp.controller("historyController", [
   "$scope",
   "$http",
+  "$location",
   "authService",
   "localStorageService",
   "accountService",
-  function ($scope, $http, authService, localStorageService, accountService) {
+  "quickResendService",
+  function ($scope, $http,$location, authService, localStorageService, accountService,quickResendService) {
     $scope.transaction = {
       transactionId: "",
       fromAccountId: "",
@@ -35,17 +37,21 @@ wuApp.controller("historyController", [
     //     console.log("Error:", error);
     //   });
 
-    $http
-      .get("http://localhost:8081/api/user/account/" + userId)
-      .then(function (response) {
-        $scope.account = response.data[0];
-        console.log($scope.account);
+    // $http
+    //   .get("http://localhost:8082/api/account/" + userId)
+    //   .then(function (response) {
+    //     $scope.account = response.data[0];
+    //     console.log($scope.account);
 
-        accId = $scope.account.accountId;
-        console.log(accId);
+    //     accId = $scope.account.accountId;
+    //     console.log(accId);
+    //   })
+    //   .catch(function (error) {
+    //     console.log("Error:", error);
+    //   });
 
-        $http
-          .get("http://localhost:8083/api/transaction/history/" + accId)
+      $http
+          .get("http://localhost:8083/api/transaction/history/" + accountId)
           .then(function (response) {
             console.log(response.data);
             $scope.transaction = response.data;
@@ -53,9 +59,20 @@ wuApp.controller("historyController", [
           .catch(function (error) {
             console.log("Error:", error);
           });
-      })
-      .catch(function (error) {
-        console.log("Error:", error);
-      });
+
+      //-----------------------------------quick resend------------------------//
+      $scope.quickResend = function (transactionDetail) {
+        console.log(transactionDetail);
+        var newAmount = transactionDetail.amount - transactionDetail.commission;
+        $location.search({
+          amount: newAmount,
+          senderCountry: transactionDetail.baseCurrencyCode,
+          receiverCountry: transactionDetail.targetCurrencyCode,
+          isResendClicked: true
+        })
+        transactionDetail.isResendClicked = true;
+        quickResendService.setSelectedTransaction(transactionDetail);
+        $location.path("/dashboard");
+      }
   },
 ]);
