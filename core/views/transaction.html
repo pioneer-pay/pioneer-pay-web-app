@@ -17,7 +17,8 @@
             <td>{{t.accountNo}}</td>
        </tbody>
         </table>
-        <a class="form-a" href="#!/receiver"><button   class="btn btn-primary btn-lg btn-block button-login" >Add new Receiver</button></a>
+        <!-- <a class="form-a" href="#!/receiver"><button   class="btn btn-primary btn-lg btn-block button-login" >Add new Receiver</button></a> -->
+        <a ng-click="navigateToAddNewReceiver()" role="button" class="btn btn-primary btn-lg btn-block button-login" ng-disabled="!isOnline">Add new Receiver</a>
         <hr>
 
         <button ng-click="onSubmit()"  class="btn btn-primary btn-lg btn-block button-login">Review and Confirm Transfer</button>
