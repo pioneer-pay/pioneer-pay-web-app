@@ -36,6 +36,20 @@ wuApp.controller("transactionController",[
       status:""
     };
 
+    //internet connection
+    $scope.$on('internetStatusChanged', function (event, isOnline) {
+      $scope.isOnline = isOnline;
+      // Update other buttons on the profile page based on online status if needed
+      // console.log("profile");
+    });
+
+    $scope.navigateToAddNewReceiver = function () {
+      // Navigate to the profile update page only if online
+      if ($scope.isOnline) {
+          $location.path('/receiver');
+      }
+    };
+
 
     //autofill receiver for quick resend
 

@@ -13,6 +13,11 @@ wuApp.controller("receiverController", [
       ifscCode:"",
   };
 
+   //cancel add new receiver
+   $scope.cancelNewReceiver = function(){
+      $location.path("/transaction");
+   };
+
 //add receiver details
    $scope.submit= function(form){
       console.log($scope.account);
