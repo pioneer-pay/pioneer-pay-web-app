@@ -5,7 +5,14 @@ wuApp.controller("statusController", [
   "authService",
   "localStorageService",
   "accountService",
-  function ($scope, $http, $interval, authService,localStorageService,accountService) {
+  function (
+    $scope,
+    $http,
+    $interval,
+    authService,
+    localStorageService,
+    accountService
+  ) {
     $scope.headLeftImage = "assets/wall-clock.png";
     $scope.headLeftText = "Your transaction is being processed...";
 
@@ -36,7 +43,7 @@ wuApp.controller("statusController", [
 
     var id = localStorageService.getUserID();
     var accId = "";
-    var accountid= accountService.getAccountID();
+    var accountid = accountService.getAccountID();
 
     function fetchTransactionStatus() {
       $http
@@ -69,6 +76,11 @@ wuApp.controller("statusController", [
       if (newStatus === "SUCCESS") {
         $scope.headLeftImage = "assets/check.png";
         $scope.headLeftText = "Your transaction was successful!";
+
+        $interval.cancel(intervalPromise);
+      } else if (newStatus === "FAILED") {
+        $scope.headLeftImage = "assets/remove.png";
+        $scope.headLeftText = "Your transaction has failed!";
 
         $interval.cancel(intervalPromise);
       } else {
